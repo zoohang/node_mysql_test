@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p Welcome to #{title}
+  //div #{error}
+  ul 
+   - each err in error
+     - if (err.sex == 1)
+       li #{err.name}&nbsp;男
+     - else
+       li #{err.name}&nbsp;女	
