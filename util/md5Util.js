@@ -1,8 +1,10 @@
+/**
+ * md5 工具
+ * @type {*}
+ */
 var crypto = require('crypto');
 
-console.log(md5_hex('All your base are belongs to us.'));
-
-function md5_hex(src) {
+exports.md5_hex = function (src) {
     var md5 = crypto.createHash('md5');
     md5.update(src, 'utf8');
     return md5.digest('hex');
