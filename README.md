@@ -24,6 +24,12 @@ exports.email = {
 ```
 
 ## 启动程序
+你可以通过
+```
+node app.js
+```
+或者使用
 ```
 ./startup.bat  || ./startup.sh
 ```
+来启动程序
