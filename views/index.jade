@@ -1,5 +1,31 @@
 extends layout
 
+block head
+  script(src='/javascripts/socket.io.min.js', charset='utf-8')
+  script
+    var socket = io.connect('http://localhost:3000');
+    /**
+    socket.on('news', function (data) {
+        console.log(data);
+        socket.emit('my other event', { my: 'data' });
+    });
+    */
+    socket.on('my other event', function (data) {
+        console.log(data);
+        $('.msg').append('<p>' + data.hello + '</p>');
+    });
+    $(function(){
+        $('form').submit(function(){
+            var words = $(".emit").val();
+            socket.emit('my other event', {w: words});
+            $(".emit").val('');
+            return false;
+        });
+    });
 block content
   h1= title
   p Welcome to #{title}
+  form
+    input.emit
+    input(type='submit')
+  .msg

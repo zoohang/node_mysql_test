@@ -6,11 +6,10 @@ exports.get = function(req, res){
 };
 
 exports.post = function(req, res) {
-//    var form = new formidable.IncomingForm();
-//    form.uploadDir = "./tmp";
 	console.log(req.body);
     // 获得文件的临时路径
     var tmp_path = req.files.img.path;
+	console.log(tmp_path);
 
     var file_name = req.files.img.name;
     var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);

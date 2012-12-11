@@ -3,11 +3,8 @@
  */
 var express = require('express')
   , config = require('./config')
-  , db = require('./dao/db')
   , routes = require('./routes')
-  , user = require('./routes/user')
-  , file = require('./routes/file')
-  , mail = require('./routes/mail')
+  , socket = require('./socket')
   , http = require('http')
   , path = require('path');
 
@@ -17,14 +14,17 @@ app.configure(function(){
 	app.set('port', config.port);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
-//	app.use(express.favicon());
-    app.use(express.favicon(__dirname + '/public/favicon.ico', {
-        maxAge: 2592000000
-    }));
+	app.use(express.favicon(__dirname + '/public/favicon.ico'));
 	app.use(express.logger('dev'));
-	app.use(express.bodyParser());
+	app.use(express.bodyParser({uploadDir: __dirname + '/public/temp'}));  // 配置默认文件上传路径
 	app.use(express.methodOverride());
 	app.use(app.router);
+	app.use(require('less-middleware')({
+        dest: __dirname + '/public/stylesheets',    // css 目录
+        src: __dirname + '/public/less',             // less 目录
+        prefix: '/stylesheets',
+        compress: true
+    }));  // 使用less 设置压缩
 	app.use(express.static(path.join(__dirname, 'public')));
 });
 
@@ -32,23 +32,12 @@ app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
-app.get('/', routes.index);
-app.get('/users', user.list);
-app.get('/upload', file.get);
-app.post('/upload', file.post);
-app.get('/mail', mail.index);
+// routes
+routes(app);
 
-
-db.connect(function(error){
-	if(error) throw error;
-	console.log("database connect!");
-})
-
-app.on('close', function(error) {
-	db.disconnect(function(error){});
-	console.log("database connect!");
+var server = http.createServer(app).listen(app.get('port'), function(){
+	console.log(" listening on port " + app.get('port'));
 });
 
-http.createServer(app).listen(app.get('port'), function(){
-	console.log("Express server listening on port " + app.get('port'));
-});
+// socket.io
+socket(server);

@@ -3,13 +3,18 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app"
+	"start": "node app"
   },
   "dependencies": {
-    "express": "3.0.3",
-    "jade": "*",
-    "mysql": "2.x",
-    "emailjs": "*",
-	"crypto": "*"
+	"express": "3.0.3",
+	"express-validator": "*",
+	"jade": "*",
+	"mysql": "2.x",
+	"emailjs": "*",
+	"crypto": "*",
+	"socket.io": "*",
+	"easyimage": "*",
+	"less-middleware": "*",
+	"less": "*"
   }
 }
