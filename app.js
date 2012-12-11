@@ -20,11 +20,11 @@ app.configure(function(){
 	app.use(express.methodOverride());
 	app.use(app.router);
 	app.use(require('less-middleware')({
-        dest: __dirname + '/public/stylesheets',    // css 目录
-        src: __dirname + '/public/less',             // less 目录
-        prefix: '/stylesheets',
-        compress: true
-    }));  // 使用less 设置压缩
+        	dest: __dirname + '/public/stylesheets',    // css 目录
+        	src: __dirname + '/public/less',             // less 目录
+        	prefix: '/stylesheets',
+        	compress: true
+    	}));  // 使用less 设置压缩
 	app.use(express.static(path.join(__dirname, 'public')));
 });
 
