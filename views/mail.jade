@@ -1,0 +1,21 @@
+extends layout
+
+block head
+    link(rel='stylesheet', href='/stylesheets/index.css')
+    style
+        input[type="text"]{
+            display: block;
+            margin: 4px 0px;
+            width: 586px;
+            padding: 6px;
+        }
+block content
+    h1 Welcome to snode!
+    h4 node email test
+    .content
+        form(action='/mail', method='post')
+            input(type='text', name='user', placeholder='收件人')
+            input(type='text', name='title', placeholder='主题')
+            textarea#editor(name='content') 正文
+            input(type='submit', value='发送')
+    include common/_kindeditor

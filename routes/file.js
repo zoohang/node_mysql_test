@@ -1,5 +1,5 @@
 var fs = require('fs')
-   , util = require('util') ;
+   , util = require('util');
 
 exports.get = function(req, res){
     res.render('file', { title: 'upload' });
@@ -26,4 +26,23 @@ exports.post = function(req, res) {
     });
     res.set('Content-Type', 'text/html; charset=UTF-8');
     res.send('File uploaded to: ' + target_path + ' - ' + req.files.img.size + ' bytes' + img_name + '<img src='+ img_path + ' />');
+}
+
+exports.editor = function(req, res) {
+    var tmp_path = req.files.imgFile.path;
+
+    var file_name = req.files.imgFile.name;
+    var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);
+
+    var img_path = './uploads/' + img_name;
+    var target_path = './public/uploads/' + img_name;
+
+    var readStream = fs.createReadStream(tmp_path);
+    var writeStream = fs.createWriteStream(target_path);
+
+    // 移动文件
+    util.pump(readStream, writeStream, function() {
+        fs.unlinkSync(tmp_path);
+    });
+    res.json({error:0, url:img_path});
 }

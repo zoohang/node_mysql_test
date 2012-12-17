@@ -11,7 +11,7 @@ var express = require('express')
 var app = express();
 
 app.configure(function(){
-	app.set('port', config.port);
+	app.set('port', process.env.VCAP_APP_PORT || config.port);
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
 	app.use(express.favicon(__dirname + '/public/favicon.ico'));

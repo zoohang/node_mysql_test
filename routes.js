@@ -15,6 +15,8 @@ module.exports = function(app){
     app.get('/users', user.list);
     app.get('/upload', file.get);
     app.post('/upload', file.post);
-    app.get('/mail', mail.index);
+    app.post('/upload/editor', file.editor);
+    app.get('/mail', mail.get);
+    app.post('/mail', mail.post);
 }
 

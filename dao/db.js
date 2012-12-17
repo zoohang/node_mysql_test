@@ -6,9 +6,17 @@
  * To change this template use File | Settings | File Templates.
  */
 var mysql = require("mysql")
-  , config = require("../config");
+  , config = require("../config")
+  , dburl;
 
-var connection = mysql.createConnection(config.db);
+if(process.env.VCAP_SERVICES){
+    var env = JSON.parse(process.env.VCAP_SERVICES);
+    dburl = env['mysql-5.1'][0]['credentials'];
+}else{
+    dburl = config.db;
+}  
+  
+var connection = mysql.createConnection(dburl);
 
 connection.connect(function(error) {
     if(error){
@@ -18,9 +26,9 @@ connection.connect(function(error) {
 });
 
 exports.query = function(sql, callback) {
-	connection.query(sql, function(error, rows){
-		callback(error, rows);
-	});
+    connection.query(sql, function(error, rows){
+        callback(error, rows);
+    });
 }
 
 /**

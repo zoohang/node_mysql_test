@@ -23,9 +23,22 @@ var message = {
 // send the message and get a callback with an error or details of the message that was sent
 //server.send(message, function(err, message) { console.log(err || message); });
 
-exports.index = function(req, res){
+exports.post = function(req, res){
+    console.log(req.param);
+    var user = req.body.user;
+    var title = req.body.title;
+    var content = req.body.content;
+    message.to = user;
+    message.text = title;
+    message.subject = title;
+    message.attachment[0].data = '<html>' + content + '</html>';
+    console.log(message);
     server.send(message, function(err, message) {
         console.log(err || message);
     });
-    res.render('index', { title: 'Email send ok!' });
+    res.render('mail', { title: 'Email send ok!' });
+};
+
+exports.get = function(req, res){
+    res.render('mail', { title: 'Email test!' });
 };

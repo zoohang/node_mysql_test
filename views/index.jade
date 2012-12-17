@@ -1,31 +1,21 @@
 extends layout
 
 block head
+  link(rel='stylesheet', href='/stylesheets/index.css')
   script(src='/javascripts/socket.io.min.js', charset='utf-8')
-  script
-    var socket = io.connect('http://localhost:3000');
-    /**
-    socket.on('news', function (data) {
-        console.log(data);
-        socket.emit('my other event', { my: 'data' });
-    });
-    */
-    socket.on('my other event', function (data) {
-        console.log(data);
-        $('.msg').append('<p>' + data.hello + '</p>');
-    });
-    $(function(){
-        $('form').submit(function(){
-            var words = $(".emit").val();
-            socket.emit('my other event', {w: words});
-            $(".emit").val('');
-            return false;
-        });
-    });
 block content
-  h1= title
-  p Welcome to #{title}
-  form
-    input.emit
-    input(type='submit')
-  .msg
+  h2 Welcome to snode!
+  h3 snode 技术交流聊天室！
+  p.marquee
+  .window
+    .win_top
+      .left
+      .rigth
+        p 在线用户
+    .win_bot
+      textarea(autofocus="true", placeholder="请输入...")
+      input(class="submit", type="submit", value="发送")
+      input(class="reset", type="reset", value="清除")
+  p#msg 有意见或好的建议请联系：596392912@qq.com thanks!
+  script(src='/javascripts/index-socket.js', charset='utf-8')
+    

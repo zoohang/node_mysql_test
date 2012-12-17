@@ -2,9 +2,9 @@
 /*
  * GET home page.
  */
-var util = require("../util/md5Util");
+var md5 = require("../util/md5Util");
 
 exports.index = function(req, res){
-    console.log(util.md5_hex("123123"));
-    res.render('index', { title: 'Express' });
+    console.log(md5.hex("123123"));
+    res.render('index', { title: 'snode'});
 };

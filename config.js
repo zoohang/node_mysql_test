@@ -9,9 +9,9 @@ exports.port = 3000;
 exports.db = {
       url:      "localhost"
     , port:     "3306"
-    , database: "test"
+    , database: "solution"
     , user:     "root"
-    , password: "admin"
+    , password: "root"
 };
 
 exports.email = {
