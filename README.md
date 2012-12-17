@@ -4,12 +4,12 @@
 ```
 https://console.appfog.com/
 ```
-## Install
-```bash
+# Install
+```
 git clone git://github.com/ChunMengLu/node_mysql_test.git
 ```
-## 本地测试需要更改config.js
-## appfog无需更改
+# 本地测试需要更改config.js
+*appfog无需更改
 ```
 exports.port = 3000;
 exports.db = {
@@ -27,7 +27,7 @@ exports.email = {
     , ssl:      true
 }
 ```
-## *测试 启动程序
+# *测试 启动程序
 ```
 node app.js
 ```
