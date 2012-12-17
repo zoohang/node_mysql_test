@@ -1,10 +1,15 @@
 # node-mysql-test
 采用的express node mvc框架
+基于appfog云空间，详情请访问appfog官网：
+```
+https://console.appfog.com/
+```
 ## Install
 ```bash
 git clone git://github.com/ChunMengLu/node_mysql_test.git
 ```
-## 更改config.js
+## 本地测试需要更改config.js
+## appfog无需更改
 ```
 exports.port = 3000;
 exports.db = {
@@ -22,17 +27,13 @@ exports.email = {
     , ssl:      true
 }
 ```
-
-## 启动程序
-你可以通过
+## *测试 启动程序
 ```
 node app.js
 ```
-或者使用
+或
 ```
-./startup.bat  || ./startup.sh
+./startup.bat 
 ```
-添加了对appfog的支持
-```
-https://console.appfog.com/
-```
+
+如果有不明白或问题可联系email：596392912@qq.com Thanks！
