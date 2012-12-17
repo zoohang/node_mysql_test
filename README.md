@@ -32,4 +32,7 @@ node app.js
 ```
 ./startup.bat  || ./startup.sh
 ```
-来启动程序
+添加了对appfog的支持
+```
+https://console.appfog.com/
+```
