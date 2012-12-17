@@ -1,5 +1,6 @@
 var fs = require('fs')
-   , util = require('util');
+   , util = require('util')
+   , config = require('../config');
 
 exports.get = function(req, res){
     res.render('file', { title: 'upload' });
@@ -34,12 +35,13 @@ exports.editor = function(req, res) {
     var file_name = req.files.imgFile.name;
     var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);
 
-    var img_path = './uploads/' + img_name;
+    var img_path = config.domain + '/uploads/' + img_name;
+	console.log(img_path);
     var target_path = './public/uploads/' + img_name;
 
     var readStream = fs.createReadStream(tmp_path);
     var writeStream = fs.createWriteStream(target_path);
-
+	
     // 移动文件
     util.pump(readStream, writeStream, function() {
         fs.unlinkSync(tmp_path);
