@@ -13,3 +13,10 @@ exports.list = function(req, res) {
     res.render('user', {'error': json, title: 'hello'});
   });
 };
+
+exports.signup = function(req, res){
+    res.render('blog', { title: 'snode 注册'});
+}
+exports.login = function(req, res){
+    res.render('blog', { title: 'snode 登陆'});
+}

@@ -6,7 +6,6 @@
  * To change this template use File | Settings | File Templates.
  */
 exports.port = 3000;
-exports.domain = 'http://snode.hp.af.cm';
 exports.db = {
       url:      "localhost"
     , port:     "3306"

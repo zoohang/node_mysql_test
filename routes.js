@@ -8,15 +8,33 @@
 var index = require('./routes/index')
     , user = require('./routes/user')
     , file = require('./routes/file')
-    , mail = require('./routes/mail');
+    , mail = require('./routes/mail')
+    , socket = require('./routes/socket.io')
+    , blog = require("./routes/blog")
+    , demo = require("./routes/demo");
 
 module.exports = function(app){
+    // home page
     app.get('/', index.index);
+
+
     app.get('/users', user.list);
+
+    app.get('/signup', user.signup);
+    app.get('/login', user.login);
+
+    app.get("/blog", blog.get);
+    app.get("/blog", blog.get);
+
+    app.get("/demo", demo.get);
+
     app.get('/upload', file.get);
     app.post('/upload', file.post);
     app.post('/upload/editor', file.editor);
     app.get('/mail', mail.get);
     app.post('/mail', mail.post);
+
+    // socket.io chat room
+    app.get('/socket', socket.index);
 }
 
