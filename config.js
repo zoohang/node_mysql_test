@@ -10,7 +10,7 @@ exports.domain = 'http://snode.hp.af.cm';
 exports.db = {
       url:      "localhost"
     , port:     "3306"
-    , database: "solution"
+    , database: "snode"
     , user:     "root"
     , password: "root"
 };
