@@ -18,7 +18,7 @@ exports.db = {
     , port:     "3306"
     , database: "test"
     , user:     "root"
-    , password: "admin"
+    , password: "root"
 };
 
 exports.email = {
