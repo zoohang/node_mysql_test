@@ -38,7 +38,7 @@ exports.signupPost = function(req, res){
             console.log(user);
             req.session.user = user;
             console.log(md5.hex(user));
-            req.cookie.("snode_user", md5.hex(user), {path: '/',maxAge: 1000*60*60*24*30}); //cookie 有效期30天
+            req.cookie("snode_user", md5.hex(user), {path: '/',maxAge: 1000*60*60*24*30}); //cookie 有效期30天
             res.render('error', { title: '注册成功！'});
         }
     });
