@@ -1,0 +1,80 @@
+//用户信息表
+user_info:
+id,
+nick_name,			//昵称
+real_name,			//真实姓名
+password,			//密码md5
+email,				//邮箱
+email_verify,		//验证邮箱
+head_photo,			//头像
+sex,				//性别   保密：0 男：1 女：2
+birthday,			//生日
+status, 			//状态	 离线：0  在线：1
+reg_time,			//注册时间
+recent_login_time,  //最近登录时间
+signature,			//个性签名
+qq,					//QQ
+liveness,			//活跃度
+contributio,		//贡献度
+
+del_status,			//是否删除   默认：0  删除：1
+create_time,		//添加时间
+update_time,		//更新时间
+
+
+疑问：验证邮箱，是给用户发送邮件点击链接的那种吗？
+
+活跃度 每次登录+1 每次回答问题+2 每次提问+3
+贡献度 每次提问+1  每次回答是最佳答案+2
+
+------------------------------------------------------------------
+//问题表
+blog
+id,
+title,				//标题
+content,			//内容
+user_id,			//用户id
+
+del_status,			//是否删除   默认：0  删除：1
+create_time,		//添加时间
+update_time,		//更新时间
+
+------------------------------------------------------------------
+//标签表
+tags,
+id,
+tag_name,			//标签名
+
+del_status,			//是否删除   默认：0  删除：1
+create_time,		//添加时间
+update_time,		//更新时间
+
+
+------------------------------------------------------------------
+//标签 和 问题多对多
+blog_tags:
+id,
+blog_id,			//问题id
+tag_id,
+
+del_status,			//是否删除   默认：0  删除：1
+create_time,		//添加时间
+update_time,		//更新时间
+
+------------------------------------------------------------------
+admin
+id,
+u_name,
+password,
+
+del_status,			//是否删除   默认：0  删除：1
+create_time,		//添加时间
+update_time,		//更新时间
+
+------------------------------------------------------------------
+mail_verify
+id,
+user_id, 		// user
+verify,			// code
+time,			
+state			// 状态 默认：0  已验证：1

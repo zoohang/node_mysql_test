@@ -7,10 +7,10 @@ exports.get = function(req, res){
 };
 
 exports.post = function(req, res) {
-	console.log(req.body);
+    console.log(req.body);
     // 获得文件的临时路径
     var tmp_path = req.files.img.path;
-	console.log(tmp_path);
+    console.log(tmp_path);
 
     var file_name = req.files.img.name;
     var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);
@@ -36,12 +36,12 @@ exports.editor = function(req, res) {
     var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);
 
     var img_path = config.domain + '/uploads/' + img_name;
-	console.log(img_path);
+    console.log(img_path);
     var target_path = './public/uploads/' + img_name;
 
     var readStream = fs.createReadStream(tmp_path);
     var writeStream = fs.createWriteStream(target_path);
-	
+    
     // 移动文件
     util.pump(readStream, writeStream, function() {
         fs.unlinkSync(tmp_path);

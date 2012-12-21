@@ -1,0 +1,23 @@
+//
+   Created with JetBrains WebStorm.
+   User: 春梦
+   Date: 12-12-20
+   Time: 下午8:45
+   To change this template use File | Settings | File Templates.
+extends common/_layout
+
+block content
+    form(method='post', action='/signup')
+        p
+            input(type='email', name='user[name]', placeholder='邮箱', required)
+        p
+            input(type='password', name='user[pwd]',placeholder='密码', pattern="[A-Za-z0-9_]{6,16}", required)
+        p
+            input(type='password', name='rpwd',placeholder='确认密码', pattern="[A-Za-z0-9_]{6,16}", required)
+        p
+            input(type="radio", name="user[sex]", value="1", checked)
+            | 男
+            input(type="radio", name="user[sex]", value="2")
+            | 女
+        p
+            input(type='submit', value='注册')

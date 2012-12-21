@@ -20,7 +20,9 @@ module.exports = function(app){
 
     app.get('/users', user.list);
 
-    app.get('/signup', user.signup);
+    app.get('/signup', user.signupGet);
+    app.post('/signup', user.signupPost);
+
     app.get('/login', user.login);
 
     app.get("/blog", blog.get);

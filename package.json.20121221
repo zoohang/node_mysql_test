@@ -6,6 +6,9 @@
     "start": "node app"
   },
   "dependencies": {
+    "connect": "*",
+    "connect-redis": "*",
+    "redis": "*",
     "express": "3.0.3",
     "express-validator": "*",
     "jade": "*",
