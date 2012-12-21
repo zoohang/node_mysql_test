@@ -12,6 +12,7 @@ git clone git://github.com/ChunMengLu/node_mysql_test.git
 *appfog无需更改
 ```
 exports.port = 3000;
+exports.domain = 'http://snode.hp.af.cm';
 exports.db = {
       url:      "localhost"
     , port:     "3306"
