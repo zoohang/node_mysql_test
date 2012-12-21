@@ -35,7 +35,7 @@ public/javascripts/index-socket.js
 var socket = io.connect('http://snode.hp.af.cm/');
 ```
 暂时没做成自适应的，下次抽空跟新吧！
-```
+
 # *测试 启动程序
 ```
 node app.js
@@ -45,5 +45,6 @@ node app.js
 ./startup.bat 
 ```
 
-## 请删除掉views/common/_layout.jade中的百度统计代码！
+请删除掉views/common/_layout.jade中的百度统计代码！
+
 如果有不明白或问题可联系email：596392912@qq.com Thanks！
