@@ -14,7 +14,6 @@
     "jade": "*",
     "mysql": "2.x",
     "emailjs": "*",
-    "crypto": "*",
     "socket.io": "*",
     "easyimage": "*",
     "less-middleware": "*",
