@@ -29,12 +29,13 @@ exports.post = function(req, res) {
     res.send('File uploaded to: ' + target_path + ' - ' + req.files.img.size + ' bytes' + img_name + '<img src='+ img_path + ' />');
 }
 
+// kindeditor 图片上传
 exports.editor = function(req, res) {
     var tmp_path = req.files.imgFile.path;
 
     var file_name = req.files.imgFile.name;
     var img_name = new Date().getTime() + file_name.substr(file_name.lastIndexOf('.'), file_name.length);
-
+    // 发送邮件里的图片地址 必须为全路径
     var img_path = config.domain + '/uploads/' + img_name;
     console.log(img_path);
     var target_path = './public/uploads/' + img_name;

@@ -1,4 +1,5 @@
-var socket = io.connect('http://snode.hp.af.cm/');
+// domain 记录于config中
+var socket = io.connect('#{domain}');
 socket.on('join', function (data) {
     console.log(data);
     join(data);
