@@ -25,6 +25,8 @@ if(cloudServices){
         , password: "root"
     }
 };
+// secret
+exports.secret = "snode";
 // email 配置
 exports.email = {
       user:     "q596392912"

@@ -19,7 +19,7 @@ app.configure(function(){
     app.use(express.bodyParser({uploadDir: __dirname + '/public/temp'}));  // 配置默认文件上传路径
     app.use(express.methodOverride());
     app.use(express.cookieParser());
-    app.use(express.session({ secret: 'snode'}));
+    app.use(express.session({ secret: config.secret}));
     app.use(app.router);
     app.use(require('less-middleware')({
             dest: __dirname + '/public/stylesheets',    // css 目录
@@ -30,13 +30,9 @@ app.configure(function(){
     app.use(express.static(path.join(__dirname, 'public')));
 });
 
+// 开发环境
 app.configure('development', function(){
     app.use(express.errorHandler());
-});
-
-app.post('*', function(req, res, next) {
-    global.session = req.session;
-    next();
 });
 
 // routes
