@@ -18,7 +18,7 @@ Date: 2012-12-21 11:32:39
 DROP database IF EXISTS `snode`;
 create database `snode`;
 
-
+use `snode`;
 
 SET FOREIGN_KEY_CHECKS=0;
 
