@@ -34,12 +34,16 @@ exports.signupPost = function(req, res){
             res.render('error', { title: '注册失败！'});
         }else{
             console.log("ID:" + results.insertId);
+            // 返回的用户id
+            user.id = results.insertId;
+            // 清空pwd
             user.pwd = null;
             console.log(user);
             req.session.user = user;
             console.log(md5.hex(user));
             // req.cookie("snode_user", md5.hex(user), {path: '/',maxAge: 1000*60*60*24*30}); //cookie 有效期30天
-            res.render('error', { title: '注册成功！'});
+//            res.render('error', { title: '注册成功！'});
+            res.redirect("/users");
         }
     });
 }
