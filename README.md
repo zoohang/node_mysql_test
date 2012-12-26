@@ -56,4 +56,6 @@ node app.js
 
 如果有不明白或问题可联系email：596392912@qq.com Thanks！
 
+```
 由于开发缓慢，网站页面部分将使用java去实现，node专注做html app部分！
+```
