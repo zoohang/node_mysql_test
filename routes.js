@@ -11,7 +11,8 @@ var index = require('./routes/index')
     , mail = require('./routes/mail')
     , socket = require('./routes/socket.io')
     , blog = require("./routes/blog")
-    , demo = require("./routes/demo");
+    , demo = require("./routes/demo")
+	, resource = require("./routes/resource");
 
 module.exports = function(app){
     // home page
@@ -36,6 +37,10 @@ module.exports = function(app){
     app.get('/mail', mail.get);
     app.post('/mail', mail.post);
 
+	
+	// resource
+	app.get('/resource', resource.get)
+	
     // socket.io chat room
     app.get('/socket', socket.index);
 }
