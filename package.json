@@ -10,10 +10,8 @@
     "express-validator": "*",
     "jade": "*",
     "mysql": "2.x",
+	"generic-pool": "*",
     "emailjs": "*",
-    "socket.io": "*",
-    "easyimage": "*",
-    "less-middleware": "*",
-    "less": "*"
+    "socket.io": "*"
   }
 }

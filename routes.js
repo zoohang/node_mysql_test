@@ -10,37 +10,44 @@ var index = require('./routes/index')
     , file = require('./routes/file')
     , mail = require('./routes/mail')
     , socket = require('./routes/socket.io')
-    , blog = require("./routes/blog")
-    , demo = require("./routes/demo")
-	, resource = require("./routes/resource");
+    , blog = require('./routes/blog')
+    , demo = require('./routes/demo');
 
 module.exports = function(app){
+    // 配置session 页面中使用 user 获取
+    app.all('*', function(req, res, next){
+        res.locals.user = req.session.user;
+        next();
+    });
+
     // home page
     app.get('/', index.index);
 
-
+    // user
     app.get('/users', user.list);
 
+    // 注册
     app.get('/signup', user.signupGet);
     app.post('/signup', user.signupPost);
 
+    // 登陆
     app.get('/login', user.login);
 
+    // blog 相关
     app.get("/blog", blog.get);
     app.get("/blog", blog.get);
 
     app.get("/demo", demo.get);
 
+    // 上传相关
     app.get('/upload', file.get);
     app.post('/upload', file.post);
     app.post('/upload/editor', file.editor);
+
+    // 邮件相关
     app.get('/mail', mail.get);
     app.post('/mail', mail.post);
 
-	
-	// resource
-	app.get('/resource', resource.get)
-	
     // socket.io chat room
     app.get('/socket', socket.index);
 }

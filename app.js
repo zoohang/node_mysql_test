@@ -6,11 +6,9 @@ var express = require('express')
   , routes = require('./routes')
   , socket = require('./socket')
   , http = require('http')
-  , path = require('path')
-  , redis = require('redis');
+  , path = require('path');
 
 var app = express();
-var RedisStore = require('connect-redis')(express);
 
 app.configure(function(){
     app.set('port', process.env.VCAP_APP_PORT || config.port);
@@ -21,26 +19,11 @@ app.configure(function(){
     app.use(express.bodyParser({uploadDir: __dirname + '/public/temp'}));  // 配置默认文件上传路径
     app.use(express.methodOverride());
     app.use(express.cookieParser());
-    app.use(express.session({
-        secret: config.secret,
-        store: new RedisStore({ host: 'localhost', port: 6397})
-    }));
+    app.use(express.session({ secret: config.secret}));
     app.use(app.router);
-    app.use(require('less-middleware')({
-        dest: __dirname + '/public/stylesheets',    // css 目录
-        src: __dirname + '/public/less',             // less 目录
-        prefix: '/stylesheets',
-        compress: true
-    }));  // 使用less 设置压缩
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use(function(req, res, next){
-        res.locals.user = req.session.user;
-        next();
-    });
-    app.use(function(err, req, res, next){
-        // if an error occurs Connect will pass it down
-        // through these "error-handling" middleware
-        // allowing you to respond however you like
+    app.use(function(error, req, res, next){
+        // 配置错误页面
         res.send(500, { error: 'Sorry something bad happened!' });
     });
 });

@@ -3,7 +3,9 @@ extends common/_layout
 block content
   h1= title
   p Welcome to #{title}
-  //div #{error}
+  - if(user)
+    div
+        |你好 #{user.id}号用户
   ul 
    - each err in error
      - if (err.sex == 1)

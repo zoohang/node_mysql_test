@@ -6,7 +6,7 @@ var md5 = require("../util/md5Util");
 
 exports.list = function(req, res) {
     var sql = 'SELECT * FROM user';
-    db.query(sql, [], function(error, json) {
+    db.query(sql, function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
         }
@@ -34,12 +34,10 @@ exports.signupPost = function(req, res){
             res.render('error', { title: '注册失败！'});
         }else{
             console.log("ID:" + results.insertId);
-            // 返回的用户id
             user.id = results.insertId;
-            // 清空pwd
             user.pwd = null;
             console.log(user);
-            res.locals.user = user;
+            req.session.user = user;
             console.log(md5.hex(user));
             // req.cookie("snode_user", md5.hex(user), {path: '/',maxAge: 1000*60*60*24*30}); //cookie 有效期30天
 //            res.render('error', { title: '注册成功！'});

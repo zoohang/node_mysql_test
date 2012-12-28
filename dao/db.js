@@ -5,48 +5,74 @@
  * Time: 下午11:00
  * To change this template use File | Settings | File Templates.
  */
-var mysql = require("mysql")
-  , config = require("../config");
+var config = require("../config")
+  , poolModule = require('generic-pool');
 
-var connection = mysql.createConnection(config.db);
-
-connection.connect(function(error) {
-    if(error){
-        console.log("Mysql connect error, Please check config.js! error code:" + error.code);
-    }else{
-        console.log("Mysql connected ...");
-    }
+var pool = poolModule.Pool({
+    name     : 'mysql',
+    create   : function(callback) {
+        var connection = require("mysql").createConnection(config.db);
+        connection.connect();
+        // parameter order: err, resource
+        // new in 1.0.6
+        callback(null, connection);
+    },
+    destroy  : function(client) { client.end(); },
+    max      : 10,
+    // optional. if you set this, make sure to drain() (see step 3)
+    min      : 2,
+    // specifies how long a resource can stay idle in pool before being removed
+    idleTimeoutMillis : 30000,
+    // if true, logs via console.log - can also be a function
+    log : false
 });
 
-exports.query = function(sql, callback) {
-    connection.query(sql, function(error, rows){
-        callback(error, rows);
+exports.query = function(sql, param, callback) {
+    pool.acquire(function(error, client) {
+        if (error) {
+            // handle error - this is generally the err from your
+            // factory.create function
+            callback(error, null);
+        }else {
+            client.query(sql, param, function(error, rows) {
+                callback(error, rows);
+                // return object back to pool
+                pool.release(client);
+            });
+        }
     });
 }
 
 exports.save = function(Object, table, callback){
     var sql = 'INSERT INTO ' + table + ' (';
     var keys = [];
+    var aa = [];
     var value = [];
 
-    console.log(Object);
-
     for(o in Object){
-        // connection.escape(userId) 防止注入
         keys.push(o);
-        value.push(connection.escape(Object[o]));
+        aa.push('?');
+        value.push(Object[o]);
     }
 
-    sql = sql + keys.join(', ') + ') VALUES (' + value.join(', ') + ')';
+    sql = sql + keys.join(', ') + ') VALUES (' + aa.join(', ') + ')';
 
     console.log(sql);
 
     console.log(keys);
     console.log(value);
 
-    connection.query(sql, function(error, results) {
-        console.log(error);
-        console.log(results);
-        callback(error, results);
+    pool.acquire(function(error, client) {
+        if (error) {
+            // handle error - this is generally the err from your
+            // factory.create function
+            callback(error, null);
+        }else {
+            client.query(sql, value, function(error, rows) {
+                callback(error, rows);
+                // return object back to pool
+                pool.release(client);
+            });
+        }
     });
 }
