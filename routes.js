@@ -5,13 +5,13 @@
  * Time: 下午7:57
  * To change this template use File | Settings | File Templates.
  */
-var index = require('./routes/index')
-    , user = require('./routes/user')
-    , file = require('./routes/file')
-    , mail = require('./routes/mail')
-    , socket = require('./routes/socket.io')
-    , blog = require('./routes/blog')
-    , demo = require('./routes/demo');
+var index = require('./controllers/index')
+  , user = require('./controllers/user')
+  , file = require('./controllers/file')
+  , mail = require('./controllers/mail')
+  , socket = require('./controllers/socket.io')
+  , blog = require('./controllers/blog')
+  , demo = require('./controllers/demo');
 
 module.exports = function(app){
     // 配置session 页面中使用 user 获取
