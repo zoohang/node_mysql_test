@@ -1,9 +1,15 @@
 # node-mysql-test
 采用的express node mvc框架
+
 基于appfog云空间，详情请访问appfog官网：
 ```
 https://console.appfog.com/
 ```
+演示地址
+```
+http://snode.hp.af.cm/
+```
+
 # Install
 ```
 git clone git://github.com/ChunMengLu/node_mysql_test.git
