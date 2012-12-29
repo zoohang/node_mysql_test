@@ -1,4 +1,9 @@
 // Navbar start
+navIndex = navIndex == null ? '' : 'active'
+navBlog = navBlog == null ? '' : 'active'
+navDemo = navDemo == null ? '' : 'active'
+navSignup = navSignup == null ? '' : 'active'
+navLogin = navLogin == null ? '' : 'active'
 .navbar.navbar-inverse.navbar-fixed-top
     .navbar-inner
         .container
@@ -7,18 +12,17 @@
                 input.search-query(type="text", name="q")
             .nav-collapse.collapse.pull-right
                 ul.nav
-                    //.active
-                    li
+                    li(class=navIndex)
                         a(href="./") 首页
-                    li
+                    li(class=navBlog)
                         a(href="./blog") blog
                     li
                         a(href="https://github.com/ChunMengLu/node_mysql_test", target="_blank") github
-                    li
+                    li(class=navDemo)
                         a(href="./demo") demo
                     li.divider-vertical
-                    li
+                    li(class=navSignup)
                         a(href="./signup") 注册
-                    li
+                    li(class=navLogin)
                         a(href="./login") 登陆
 // Navbar end

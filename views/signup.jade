@@ -1,11 +1,7 @@
-//
-   Created with JetBrains WebStorm.
-   User: 春梦
-   Date: 12-12-20
-   Time: 下午8:45
-   To change this template use File | Settings | File Templates.
 extends common/_layout
-
+block navbar
+    navSignup = 'active'
+    include common/_navbar
 block content
     form(method='post', action='/signup')
         p

@@ -47,5 +47,5 @@ exports.signupPost = function(req, res){
 }
 
 exports.login = function(req, res){
-    res.render('blog', { title: 'snode 登陆'});
+    res.render('login', { title: 'snode 登陆'});
 }
