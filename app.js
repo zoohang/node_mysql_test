@@ -22,10 +22,12 @@ app.configure(function(){
     app.use(express.session({ secret: config.secret}));
     app.use(app.router);
     app.use(express.static(path.join(__dirname, 'public')));
+    /**
     app.use(function(error, req, res, next){
         // 配置错误页面
         res.send(500, { error: 'Sorry something bad happened!' });
     });
+     */
 });
 
 // 开发环境
