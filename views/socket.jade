@@ -1,8 +1,8 @@
 extends common/_layout
 
-block head
-  link(rel='stylesheet', href='/stylesheets/index.css')
-  script(src='/javascripts/socket.io.min.js', charset='utf-8')
+block navbar
+    navDemo = 'active'
+    include common/_navbar
 block content
   h2 Welcome to snode!
   h3 snode 技术交流聊天室！
@@ -18,3 +18,5 @@ block content
       input(class="reset", type="reset", value="清除")
   p#msg 有意见或好的建议请联系：596392912@qq.com thanks!
   script(src='/javascripts/index-socket.js', charset='utf-8')
+  block script
+    script(src='/javascripts/socket.io.min.js', charset='utf-8')

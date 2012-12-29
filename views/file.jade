@@ -1,5 +1,8 @@
 extends common/_layout
 
+block navbar
+    navDemo = 'active'
+    include common/_navbar
 block content
   form(method='post', enctype='multipart/form-data', action='upload')
     input(type='text', name='username')

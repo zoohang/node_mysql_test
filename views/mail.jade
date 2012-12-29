@@ -1,14 +1,8 @@
 extends common/_layout
 
-block head
-    link(rel='stylesheet', href='/stylesheets/index.css')
-    style
-        input[type="text"]{
-            display: block;
-            margin: 4px 0px;
-            width: 586px;
-            padding: 6px;
-        }
+block navbar
+    navDemo = 'active'
+    include common/_navbar
 block content
     h1 Welcome to snode!
     h4 node email test
