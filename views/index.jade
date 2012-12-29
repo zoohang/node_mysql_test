@@ -10,9 +10,10 @@ block content
             img(src="./imgs/lenovo_002.jpg")
             img(src="./imgs/lenovo_003.jpg")
 block script
-    // javascript end
+    script(charset="UTF-8", src="javascripts/jquery.lazyload.js")
     script(charset="UTF-8")
         $(function(){
+            $("img").lazyload();
             $('#photoBox').cycle({
                  fx:     'shuffle',
                 easing: 'easeOutBack',
