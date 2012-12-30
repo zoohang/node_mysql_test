@@ -6,7 +6,7 @@ var md5 = require("../util/md5Util");
 
 exports.list = function(req, res) {
     var sql = 'SELECT * FROM user';
-    db.query(sql, function(error, json) {
+    db.query(sql,[], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
         }
@@ -46,6 +46,32 @@ exports.signupPost = function(req, res){
     });
 }
 
-exports.login = function(req, res){
+exports.loginGet = function(req, res){
     res.render('login', { title: 'snode 登陆'});
+}
+
+exports.loginPost = function(req, res){
+    var user = req.body.user;
+    var pwd =  user.pwd;
+    user.pwd = md5.hex(pwd);
+    var remember = req.body.remember;
+
+    if(remember != null){
+        res.cookie('rememberme', '1', { maxAge: 900000, httpOnly: true })
+    }
+
+    var sql = 'select count(1) as count from user where name=? and pwd=?';
+    db.query(sql,[user.name, user.pwd], function(error, json) {
+        if(error){
+            res.render('error', {title: 'error'});
+        }
+        console.log(JSON.stringify(json));
+
+        if(json.length > 0){
+            req.session.user = user;
+            res.locals.user = user;
+            console.log('Add session!');
+        }
+        res.redirect('/');
+    });
 }

@@ -46,19 +46,16 @@ exports.query = function(sql, param, callback) {
 exports.save = function(Object, table, callback){
     var sql = 'INSERT INTO ' + table + ' (';
     var keys = [];
-    var aa = [];
+    var order = [];
     var value = [];
-
     for(o in Object){
         keys.push(o);
-        aa.push('?');
+        order.push('?');
         value.push(Object[o]);
     }
-
-    sql = sql + keys.join(', ') + ') VALUES (' + aa.join(', ') + ')';
+    sql = sql + keys.join(', ') + ') VALUES (' + order.join(', ') + ')';
 
     console.log(sql);
-
     console.log(keys);
     console.log(value);
 
@@ -76,3 +73,18 @@ exports.save = function(Object, table, callback){
         }
     });
 }
+
+exports.updateById = function(Object, table, callback){
+    // UPDATE `user` SET `pwd`='123456' WHERE (`id`='15')
+    var sql = 'UPDATE ' + table + ' SET ';
+    var keys = [];
+    var order = [];
+    var value = [];
+    for(o in Object){
+        keys.push(o);
+        order.push('?');
+        value.push(Object[o]);
+//        sql +=
+    }
+}
+

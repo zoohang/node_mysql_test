@@ -31,7 +31,8 @@ module.exports = function(app){
     app.post('/signup', user.signupPost);
 
     // 登陆
-    app.get('/login', user.login);
+    app.get('/login', user.loginGet);
+    app.post('/login', user.loginPost);
 
     // blog 相关
     app.get("/blog", blog.get);
