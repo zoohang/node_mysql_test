@@ -15,24 +15,20 @@ var index = require('./controllers/index')
 
 module.exports = function(app){
     // 配置session 页面中使用 user 获取
-    app.all('*', function(req, res, next){
-        res.locals.user = req.session.user;
-        next();
-    });
-
+    app.all('*', index.auth);
     // home page
     app.get('/', index.index);
 
     // user
     app.get('/users', user.list);
-
     // 注册
     app.get('/signup', user.signupGet);
-    app.post('/signup', user.signupPost);
-
+    app.post('/signup', user.signupPost, user.signupSave);
     // 登陆
     app.get('/login', user.loginGet);
     app.post('/login', user.loginPost);
+    // 登出
+    app.get('/logout', user.logout);
 
     // blog 相关
     app.get("/blog", blog.get);

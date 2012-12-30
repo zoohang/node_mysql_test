@@ -1,8 +1,9 @@
 /*
  * GET users listing.
  */
-var db = require('../dao/db');
-var md5 = require("../util/md5Util");
+var db = require('../dao/db')
+   , config = require('../config')
+   , encrypt = require("../util/encryptUtil");
 
 exports.list = function(req, res) {
     var sql = 'SELECT * FROM user';
@@ -14,11 +15,13 @@ exports.list = function(req, res) {
     });
 };
 
+// 跳转注册
 exports.signupGet = function(req, res){
     res.render('signup', { title: 'snode 注册'});
 }
 
-exports.signupPost = function(req, res){
+// 注册检测
+exports.signupPost = function(req, res, next){
     var user = req.body.user;
     var email = user.email;
     var pwd =  user.pwd;
@@ -28,7 +31,26 @@ exports.signupPost = function(req, res){
     if(pwd != rpwd){
         res.render('error', { title: '两次密码不一样！'});
     }
-    user.pwd = md5.hex(pwd);
+    user.pwd = encrypt.md5Hex(pwd);
+    // 检查用户是否存在
+    var sql = "SELECT 1 FROM user where name=?";
+    db.query(sql,[user.name], function(error, json) {
+        if(error) {
+            console.log(error);
+        }
+        console.log(JSON.stringify(json));
+        if(json.length > 0){
+//            req.json("title");
+//            res.redirect("/");
+            res.render("error", {title: "用户已存在！"});
+        }else{
+            return next();
+        }
+    });
+}
+// 保存注册用户
+exports.signupSave = function(req, res){
+    var user = req.body.user;
     db.save(user, 'user', function(error, results){
         if(error){
             res.render('error', { title: '注册失败！'});
@@ -36,28 +58,26 @@ exports.signupPost = function(req, res){
             console.log("ID:" + results.insertId);
             user.id = results.insertId;
             user.pwd = null;
-            console.log(user);
-            req.session.user = user;
-            console.log(md5.hex(user));
-            // req.cookie("snode_user", md5.hex(user), {path: '/',maxAge: 1000*60*60*24*30}); //cookie 有效期30天
-//            res.render('error', { title: '注册成功！'});
-            res.redirect("/users");
+            res.redirect("/login");
         }
     });
 }
 
+// 跳转到登陆
 exports.loginGet = function(req, res){
     res.render('login', { title: 'snode 登陆'});
 }
 
+// 登陆
 exports.loginPost = function(req, res){
     var user = req.body.user;
     var pwd =  user.pwd;
-    user.pwd = md5.hex(pwd);
+    user.pwd = encrypt.md5Hex(pwd);
     var remember = req.body.remember;
 
     if(remember != null){
-        res.cookie('rememberme', '1', { maxAge: 900000, httpOnly: true })
+        var auth_token = encrypt.aesEncrypt(user.name, config.secret);
+        res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
     }
 
     var sql = 'select count(1) as count from user where name=? and pwd=?';
@@ -65,13 +85,17 @@ exports.loginPost = function(req, res){
         if(error){
             res.render('error', {title: 'error'});
         }
-        console.log(JSON.stringify(json));
-
         if(json.length > 0){
             req.session.user = user;
             res.locals.user = user;
-            console.log('Add session!');
         }
         res.redirect('/');
     });
+}
+
+// 登出
+exports.logout = function(req, res){
+    req.session.destroy();
+    res.clearCookie('snode_user', { path: '/' });
+    res.redirect('/');
 }

@@ -24,7 +24,7 @@ app.configure(function(){
     app.use(express.static(path.join(__dirname, 'public')));
     app.use(function(error, req, res, next){
         // 配置错误页面
-        res.send(500, { error: 'Sorry something bad happened!' });
+        res.render("errer", { title: 'Sorry something bad happened!' });
     });
 });
 
@@ -34,6 +34,9 @@ app.configure('development', function(){
 });
 // 现网
 app.configure('production', function () {
+    app.use(express.static(static_dir, {
+        maxAge : config.maxAge
+    }));
     app.use(express.errorHandler());
     app.set('view cache', true);
 });

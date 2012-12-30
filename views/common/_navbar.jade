@@ -21,16 +21,16 @@ navLogin = navLogin == null ? '' : 'active'
                     li.divider-vertical
                     if locals.user
                         li.dropdown
-                            a(href="#", class="dropdown-toggle", data-toggle="dropdown") 孤独的根号三
+                            a(href="#", class="dropdown-toggle", data-toggle="dropdown") #{locals.user.name}
                                 b.caret
                             ul.dropdown-menu
                                 li
-                                    a(href="#") 账号设置
+                                    a(href="./settings") 账号设置
                                 li
-                                    a(href="#") 退出
+                                    a(href="./logout") 退出
                                 li.divider
                                 li
-                                    a(href="#") 帮助中心
+                                    a(href="./faq") 帮助中心
                     else
                         li(class=navSignup)
                             a(href="./signup") 注册

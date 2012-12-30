@@ -27,6 +27,8 @@ if(cloudServices){
 };
 // secret
 exports.secret = "snode";
+// maxAge a month
+exports.maxAge = 1000 * 60 * 60 * 24 * 31;
 // email 配置
 exports.email = {
       user:     "q596392912"

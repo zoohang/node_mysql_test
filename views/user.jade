@@ -5,9 +5,9 @@ block navbar
 block content
   h1= title
   p Welcome to #{title}
-  - if(user)
+  if locals.user
     div
-        |你好 #{user.id}号用户
+        |你好 #{locals.user.id}号用户
   ul 
    - each err in error
      - if (err.sex == 1)
