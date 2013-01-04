@@ -24,39 +24,30 @@ exports.signupGet = function(req, res){
 // 注册检测
 exports.signupPost = function(req, res, next){
     var user = req.body.user;
-    var email = user.email;
-    var pwd =  user.pwd;
-    var niceName = user.nick_name;
-
-    req.assert(email,'Enter Nick_name').notEmpty().isEmail();
-    req.assert(pwd, 'Please enter a name').notEmpty();
-    req.assert(niceName, 'Please enter a valid email').len(6,64);
+    req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
+    req.assert(['user', 'pwd'], '密码格式错误！').len(6, 20);
+    req.assert(['user', 'nick_name'], '昵称不能为空！').len(6, 20);
 
     var errors = req.validationErrors();
-    console.log(errors);
-    /*
-    var user = req.body.user;
-    var email = user.email;
-    var pwd =  user.pwd;
-    console.log(email + '\t' + pwd);
-
-    user.pwd = encrypt.md5Hex(pwd);
-    // 检查用户是否存在
-    var sql = "SELECT 1 FROM user where name=?";
-    db.query(sql,[user.name], function(error, json) {
-        if(error) {
-            console.log(error);
-        }
-        console.log(JSON.stringify(json));
-        if(json.length > 0){
-//            req.json("title");
-//            res.redirect("/");
-            res.render("error", {title: "用户已存在！"});
-        }else{
-            return next();
-        }
-    });
-    */
+    if(errors){
+        res.render('signup', {title:"注册",errors: errors});
+        return;
+    }else{
+        user.pwd = encrypt.md5Hex(user.pwd);
+        // 检查用户是否存在
+        var sql = "SELECT 1 FROM user where email=? or nick_name=?";
+        db.query(sql,[user.email, user.nick_name], function(error, json) {
+            if(error) {
+                console.log(error);
+            }
+            console.log(JSON.stringify(json));
+            if(json.length > 0){
+                res.render("error", {title: "邮箱或昵称已存在！"});
+            }else{
+                return next();
+            }
+        });
+    }
 }
 // 保存注册用户 发送激活邮件
 exports.signupSave = function(req, res){
@@ -68,6 +59,9 @@ exports.signupSave = function(req, res){
             console.log("ID:" + results.insertId);
             user.id = results.insertId;
             user.pwd = null;
+
+
+
             res.render("signup_mail", {title: '注册成功', nick_name: user.nick_name, email: user.email, url: util.emailUrl(user.email)});
         }
     });
@@ -90,7 +84,7 @@ exports.loginPost = function(req, res){
         res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
     }
 
-    var sql = 'select * from user where name=? and pwd=?';
+    var sql = 'select * from user where email=? and pwd=?';
     db.query(sql,[user.name, user.pwd], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
