@@ -1,19 +1,31 @@
 extends common/_layout
+block meta
+    style(type="text/css")
+
 block navbar
     navSignup = 'active'
     include common/_navbar
 block content
-    form(method='post', action='/signup')
-        p
-            input(type='email', name='user[name]', placeholder='邮箱', required)
-        p
-            input(type='password', name='user[pwd]',placeholder='密码', pattern="[A-Za-z0-9_]{6,16}", required)
-        p
-            input(type='password', name='rpwd',placeholder='确认密码', pattern="[A-Za-z0-9_]{6,16}", required)
-        p
-            input(type="radio", name="user[sex]", value="1", checked)
-            | 男
-            input(type="radio", name="user[sex]", value="2")
-            | 女
-        p
-            input(type='submit', value='注册')
+    .min-inner.session-edge
+        h2.big-title 注册
+        p.title-description 您正在注册本站独立帐号，我们推荐您使用第三方帐号登录
+        form(class="session-form", action="/signup", method="post")
+            .session-aside
+                |如果您有下列网站帐号，可使用这些帐号
+                a(href="/login") 直接登录
+                |无需注册<br>
+                img(src="/imgs/auth-weibo.png", alt="新浪微博")
+                img(src="/imgs/auth-qq.png", alt="腾讯微博")
+            p
+                label(for="mail") Email 地址
+                input(type="email", name="user[name]", class="text-34", required)
+            p
+                label(for="password") 登录密码
+                input(type="password", name="user[pwd]", class="text-34", required)
+            p
+                label(for="name") 常用昵称或真名
+                input(type="text", name="user[nick_name]", maxlength="32", value="", class="text-34", required)
+            .form-action
+                span.pull-left 您将同意并接受
+                    a(href="/license", target="_blank") 《服务条款》
+                input(type="submit", class="btn btn-primary", value="注册")

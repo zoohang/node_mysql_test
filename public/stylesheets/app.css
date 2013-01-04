@@ -1,0 +1,90 @@
+@import "bootstrap.css";
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+.min-inner {
+    width: 726px;
+    margin: 0 auto;
+    padding: 0;
+}
+.session-edge {
+    margin-top: 90px;
+    margin-bottom: 140px;
+    font-size: 14px;
+}
+.session-finished {
+    text-align: center;
+}
+.big-title {
+    margin: 0 0 20px;
+    font-size: 36px;
+}
+p{
+    position: relative;
+}
+.session-finished p {
+    font-size: 20px;
+    line-height: 1.7;
+    color: #666;
+    margin: 40px 0 0;
+}
+.session-form .session-aside {
+    position: absolute;
+    right: -330px;
+    width: 252px;
+    color: #666;
+}
+.title-description {
+    margin: -10px 0 24px;
+    color: #999;
+}
+.text-34 {
+    font-size: 16px;
+    padding: 9px 6px;
+    width: 100%;
+}
+.session-form {
+    width: 390px;
+    line-height: 1.6;
+    position: relative;
+}
+.form-action {
+    text-align: right;
+}
+img {
+    border: 0;
+    margin-left: 5px;
+    -ms-interpolation-mode: bicubic;
+}
+.auth-big{
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid #CCC;
+    border-bottom-color: #BBB;
+    padding: 15px;
+    background-color: #FFF;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.15);
+    font-size: 20px;
+    line-height: 1;
+    color: #666;
+}
+.auth-big img{
+    vertical-align: text-bottom;
+    margin-right: 10px;
+    width: 24px;
+    height: 24px;
+}
+.login{
+    margin-top: 40px;
+    color: #999;
+}
+.login p {
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 10px;
+    padding-right: 20px;
+    width: 290px;
+}

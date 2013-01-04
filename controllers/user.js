@@ -3,6 +3,7 @@
  */
 var db = require('../dao/db')
    , config = require('../config')
+   , util = require("../util/appUtil")
    , encrypt = require("../util/encryptUtil");
 
 exports.list = function(req, res) {
@@ -25,12 +26,20 @@ exports.signupPost = function(req, res, next){
     var user = req.body.user;
     var email = user.email;
     var pwd =  user.pwd;
-    var rpwd = req.body.rpwd;
-    console.log(email + '\t' + pwd + '\t' + rpwd);
+    var niceName = user.nick_name;
 
-    if(pwd != rpwd){
-        res.render('error', { title: '两次密码不一样！'});
-    }
+    req.assert(email,'Enter Nick_name').notEmpty().isEmail();
+    req.assert(pwd, 'Please enter a name').notEmpty();
+    req.assert(niceName, 'Please enter a valid email').len(6,64);
+
+    var errors = req.validationErrors();
+    console.log(errors);
+    /*
+    var user = req.body.user;
+    var email = user.email;
+    var pwd =  user.pwd;
+    console.log(email + '\t' + pwd);
+
     user.pwd = encrypt.md5Hex(pwd);
     // 检查用户是否存在
     var sql = "SELECT 1 FROM user where name=?";
@@ -47,8 +56,9 @@ exports.signupPost = function(req, res, next){
             return next();
         }
     });
+    */
 }
-// 保存注册用户
+// 保存注册用户 发送激活邮件
 exports.signupSave = function(req, res){
     var user = req.body.user;
     db.save(user, 'user', function(error, results){
@@ -58,7 +68,7 @@ exports.signupSave = function(req, res){
             console.log("ID:" + results.insertId);
             user.id = results.insertId;
             user.pwd = null;
-            res.redirect("/login");
+            res.render("signup_mail", {title: '注册成功', nick_name: user.nick_name, email: user.email, url: util.emailUrl(user.email)});
         }
     });
 }
@@ -80,14 +90,14 @@ exports.loginPost = function(req, res){
         res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
     }
 
-    var sql = 'select count(1) as count from user where name=? and pwd=?';
+    var sql = 'select * from user where name=? and pwd=?';
     db.query(sql,[user.name, user.pwd], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
         }
         if(json.length > 0){
-            req.session.user = user;
-            res.locals.user = user;
+            req.session.user = json[0];
+            res.locals.user = json[0];
         }
         res.redirect('/');
     });

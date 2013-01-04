@@ -1,39 +1,36 @@
 extends common/_layout
 block meta
     style(type="text/css")
-        .form-signin {
-        max-width: 300px;
-        padding: 19px 29px 29px;
-        margin: 0 auto 20px;
-        background-color: #fff;
-        border: 1px solid #e5e5e5;
-        -webkit-border-radius: 5px;
-            -moz-border-radius: 5px;
-                border-radius: 5px;
-        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-            -moz-box-shadow: 0 1px 2px rgba(0,0,0,.05);
-                box-shadow: 0 1px 2px rgba(0,0,0,.05);
-        }
-        .form-signin .form-signin-heading,
-        .form-signin .checkbox {
-            margin-bottom: 10px;
-        }
-        .form-signin input[type="text"],
-        .form-signin input[type="password"] {
-            font-size: 16px;
-            height: auto;
-            margin-bottom: 15px;
-            padding: 7px 9px;
-        }
+
 block navbar
     navLogin = 'active'
     include common/_navbar
 block content
-    form(class="form-signin", action="login", method="post")
-        h2.form-signin-heading 登陆
-        input(type="text", name="user[name]", class="input-block-level", placeholder="`邮箱", required)
-        input(type="password", name="user[pwd]", class="input-block-level", placeholder="Password", required)
-        label.checkbox
-            input(type="checkbox", name="remember",  value="1", checked)
-            |记住密码
-        button(class="btn btn-block btn-primary", type="submit", value="登陆") 登陆
+    .min-inner.session-edge
+        h2.big-title 登录
+        p.title-description 我们推荐您使用下列第三方帐号登录，无需注册更安全
+        .auth-login
+            p
+                a(class="auth-big", href="/user/oauth/weibo")
+                    img(src="/imgs/auth-weibo.png", alt="新浪微博")
+                    |新浪微博
+                a(class="auth-big", href="/user/oauth/qq")
+                    img(src="/imgs/auth-qq.png", alt="腾讯微博")
+                    |腾讯微博
+        .login
+            |或者使用本站帐号登录 (
+            a(href="./signup") 注册
+            |或
+            a(href="./forgot") 找回密码
+            |)
+            form(action="login", method="post")
+                p
+                    label(for="mail") Email 地址
+                    input(class="text-34", type="email", name="user[name]", required)
+                p
+                    label(for="password") 登录密码
+                    input(class="text-34", type="password", name="user[pwd]", required)
+                input(class="btn btn-primary", type="submit", value="登录")
+                div
+                    input(type="checkbox", name="remember", value="1", checked)
+                    |下次自动登录

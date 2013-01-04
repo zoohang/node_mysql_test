@@ -11,7 +11,8 @@ var index = require('./controllers/index')
   , mail = require('./controllers/mail')
   , socket = require('./controllers/socket.io')
   , blog = require('./controllers/blog')
-  , demo = require('./controllers/demo');
+  , demo = require('./controllers/demo')
+  , xml = require('./controllers/xmlTest');
 
 module.exports = function(app){
     // 配置session 页面中使用 user 获取
@@ -44,6 +45,12 @@ module.exports = function(app){
     // 邮件相关
     app.get('/mail', mail.get);
     app.post('/mail', mail.post);
+
+    // xml test
+    app.get("/xml", xml.get);
+
+    // test
+    app.get("/test", xml.test);
 
     // socket.io chat room
     app.get('/socket', socket.index);

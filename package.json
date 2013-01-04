@@ -10,7 +10,8 @@
     "express-validator": "*",
     "jade": "*",
     "mysql": "2.x",
-	"generic-pool": "*",
+    "generic-pool": "*",
+    "xml2js": "*",
     "emailjs": "*",
     "socket.io": "*"
   }
