@@ -29,6 +29,9 @@ exports.signupPost = function(req, res, next){
     req.assert(['user', 'nick_name'], '昵称不能为空！').len(6, 20);
 
     var errors = req.validationErrors();
+
+    console.log(errors);
+
     if(errors){
         res.render('signup', {title:"注册",errors: errors});
         return;
