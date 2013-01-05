@@ -78,10 +78,6 @@ exports.loginGet = function(req, res){
 // 登陆
 exports.loginPost = function(req, res){
     var user = req.body.user;
-    var pwd =  user.pwd;
-    user.pwd = encrypt.md5Hex(pwd);
-    var remember = req.body.remember;
-
     req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
     req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
     var errors = req.validationErrors();
@@ -92,17 +88,18 @@ exports.loginPost = function(req, res){
         return;
     }
 
+    user.pwd = encrypt.md5Hex(user.pwd);
+    var remember = req.body.remember;
     var sql = 'select * from user where email=? and pwd=?';
-    db.query(sql,[user.name, user.pwd], function(error, json) {
+    db.query(sql,[user.email, user.pwd], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
         }
         if(json.length > 0){
             if(remember != null){
-                var auth_token = encrypt.aesEncrypt(user.name, config.secret);
+                var auth_token = encrypt.aesEncrypt(user.email, config.secret);
                 res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
             }
-
             req.session.user = json[0];
             res.locals.user = json[0];
             res.redirect('/');
