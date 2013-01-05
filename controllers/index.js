@@ -41,7 +41,7 @@ exports.auth = function(req, res, next){
 }
 
 exports.index = function(req, res){
-    var df = dateUtil.dataFormat();
+    var df = dateUtil.format();
     console.log("time:\t" + df);
     res.render('index', { title: 'snode', index: 'activd'});
 };
