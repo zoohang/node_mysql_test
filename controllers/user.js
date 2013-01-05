@@ -83,17 +83,17 @@ exports.loginPost = function(req, res){
     user.pwd = encrypt.md5Hex(pwd);
     var remember = req.body.remember;
 
-    if(remember != null){
-        var auth_token = encrypt.aesEncrypt(user.name, config.secret);
-        res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
-    }
-
     var sql = 'select * from user where email=? and pwd=?';
     db.query(sql,[user.name, user.pwd], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
         }
         if(json.length > 0){
+            if(remember != null){
+                var auth_token = encrypt.aesEncrypt(user.name, config.secret);
+                res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
+            }
+
             req.session.user = json[0];
             res.locals.user = json[0];
             res.redirect('/');

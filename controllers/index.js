@@ -21,18 +21,20 @@ exports.auth = function(req, res, next){
                     console.log(error);
                 }
                 console.log(JSON.stringify(json));
-                var user = new Object();
-                user.id = json[0].id;
-                user.name = userName;
-                user.pwd = null;
-                user.sex = json[0].sex;
-                req.session.user = user;
-                res.locals.user = user;
-                console.log("has cookie!");
-                /**
-                 * 说明，由于nodejs的异步 在mysql查询之前会先返回页面
-                 * 所以将 next() 得分开来写
-                 */
+                if(json.length > 0){
+                    var user = new Object();
+                    user.id = json[0].id;
+                    user.name = userName;
+                    user.pwd = null;
+                    user.sex = json[0].sex;
+                    req.session.user = user;
+                    res.locals.user = user;
+                    console.log("has cookie!");
+                    /**
+                     * 说明，由于nodejs的异步 在mysql查询之前会先返回页面
+                     * 所以将 next() 得分开来写
+                     */
+                }
                 return next();
             });
         }
