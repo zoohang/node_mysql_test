@@ -30,7 +30,6 @@ exports.signupPost = function(req, res, next){
     req.assert(['user', 'nick_name'], '昵称为4~20个字符！').len(4, 20);
 
     var errors = req.validationErrors();
-
     console.log(errors);
 
     if(errors){
@@ -86,6 +85,12 @@ exports.loginPost = function(req, res){
     req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
     req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
     var errors = req.validationErrors();
+
+    console.log(errors);
+    if(errors){
+        res.render('login', {title: 'snode 登陆',errors: errors});
+        return;
+    }
 
     var sql = 'select * from user where email=? and pwd=?';
     db.query(sql,[user.name, user.pwd], function(error, json) {
