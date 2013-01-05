@@ -38,6 +38,7 @@ var pool = poolModule.Pool({
  * @param callback
  */
 exports.query = function(sql, param, callback) {
+    console.log(sql);
     pool.acquire(function(error, client) {
         if (error) {
             // handle error - this is generally the err from your
@@ -72,9 +73,6 @@ exports.save = function(Object, table, callback){
     sql = sql + keys.join(', ') + ') VALUES (' + order.join(', ') + ')';
 
     console.log(sql);
-    console.log(keys);
-    console.log(value);
-
     pool.acquire(function(error, client) {
         if (error) {
             // handle error - this is generally the err from your
@@ -97,18 +95,33 @@ exports.save = function(Object, table, callback){
  * @param table
  * @param callback
  */
-exports.update = function(Object, Object, table, callback){
+exports.updateById = function(Object, id, table, callback){
     // UPDATE `user` SET `pwd`='123456' WHERE (`id`='15')
+    // UPDATE `user_info` SET `nick_name`='1', `real_name`='1' WHERE (`id`='9')
     var sql = 'UPDATE ' + table + ' SET ';
     var keys = [];
-    var order = [];
     var value = [];
     for(o in Object){
-        keys.push(o);
-        order.push('?');
+        keys.push(o + '=?');
         value.push(Object[o]);
-//        sql +=
     }
+    sql += keys.join(', ') + ' WHERE (id = ?)';
+    value.push(id);
+
+    console.log(sql);
+    pool.acquire(function(error, client) {
+        if (error) {
+            // handle error - this is generally the err from your
+            // factory.create function
+            callback(error, null);
+        }else {
+            client.query(sql, value, function(error, rows) {
+                callback(error, rows);
+                // return object back to pool
+                pool.release(client);
+            });
+        }
+    });
 }
 
 /**
@@ -118,5 +131,29 @@ exports.update = function(Object, Object, table, callback){
  * @param callback
  */
 exports.delete = function(Object, table, callback){
+    // DELETE FROM `user` WHERE (`id`='41')
+    var sql = 'DELETE FROM ' + table + ' WHERE (';
 
+    var keys = [];
+    var value = [];
+    for(o in Object){
+        keys.push(o + '=?');
+        value.push(Object[o]);
+    }
+    sql += keys.join(" and ") + ")";
+
+    console.log(sql);
+    pool.acquire(function(error, client) {
+        if (error) {
+            // handle error - this is generally the err from your
+            // factory.create function
+            callback(error, null);
+        }else {
+            client.query(sql, value, function(error, rows) {
+                callback(error, rows);
+                // return object back to pool
+                pool.release(client);
+            });
+        }
+    });
 }

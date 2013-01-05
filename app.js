@@ -1,6 +1,3 @@
-/**
- * Module dependencies.
- */
 var express = require('express')
   , expressValidator = require('express-validator')
   , config = require('./config')
