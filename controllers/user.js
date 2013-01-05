@@ -11,8 +11,9 @@ exports.list = function(req, res) {
     db.query(sql,[], function(error, json) {
         if(error){
             res.render('error', {title: 'error'});
+        }else{
+            res.render('user', {'error': json, title: 'hello'});
         }
-        res.render('user', {'error': json, title: 'hello'});
     });
 };
 

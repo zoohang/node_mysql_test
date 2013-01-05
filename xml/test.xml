@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<root>
-    <child>
-        <grandchild>
+<html>
+    <body>
+        <nav>
             <![CDATA[
 
            ]]>
-        </grandchild>
-    </child>
-    <sibling>with content!</sibling>
-</root>
+        </nav>
+        <content>
+            <![CDATA[
+
+            ]]>
+        </content>
+        <footer>
+            <![CDATA[
+
+            ]]>
+        </footer>
+    </body>
+</html>

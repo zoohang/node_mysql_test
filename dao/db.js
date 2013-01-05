@@ -8,6 +8,10 @@
 var config = require("../config")
   , poolModule = require('generic-pool');
 
+/**
+ * mysql pool
+ * @type {Object}
+ */
 var pool = poolModule.Pool({
     name     : 'mysql',
     create   : function(callback) {
@@ -27,6 +31,12 @@ var pool = poolModule.Pool({
     log : false
 });
 
+/**
+ * mysql query
+ * @param sql
+ * @param param
+ * @param callback
+ */
 exports.query = function(sql, param, callback) {
     pool.acquire(function(error, client) {
         if (error) {
@@ -43,6 +53,12 @@ exports.query = function(sql, param, callback) {
     });
 }
 
+/**
+ * mysql insert
+ * @param Object
+ * @param table
+ * @param callback
+ */
 exports.save = function(Object, table, callback){
     var sql = 'INSERT INTO ' + table + ' (';
     var keys = [];
@@ -74,7 +90,14 @@ exports.save = function(Object, table, callback){
     });
 }
 
-exports.updateById = function(Object, table, callback){
+/**
+ * mysql update
+ * @param Object      * old Object
+ * @param Object      * new Object
+ * @param table
+ * @param callback
+ */
+exports.update = function(Object, Object, table, callback){
     // UPDATE `user` SET `pwd`='123456' WHERE (`id`='15')
     var sql = 'UPDATE ' + table + ' SET ';
     var keys = [];
@@ -88,3 +111,12 @@ exports.updateById = function(Object, table, callback){
     }
 }
 
+/**
+ * mysql delete
+ * @param Object
+ * @param table
+ * @param callback
+ */
+exports.delete = function(Object, table, callback){
+
+}
