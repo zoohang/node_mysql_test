@@ -26,8 +26,8 @@ exports.signupGet = function(req, res){
 exports.signupPost = function(req, res, next){
     var user = req.body.user;
     req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
-    req.assert(['user', 'pwd'], '密码格式错误！').len(6, 20);
-    req.assert(['user', 'nick_name'], '昵称不能为空！').len(6, 20);
+    req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
+    req.assert(['user', 'nick_name'], '昵称为4~20个字符！').len(4, 20);
 
     var errors = req.validationErrors();
 
@@ -96,8 +96,10 @@ exports.loginPost = function(req, res){
         if(json.length > 0){
             req.session.user = json[0];
             res.locals.user = json[0];
+            res.redirect('/');
+        }else{
+            res.render('error', { title: '用户名或密码错误！'});
         }
-        res.redirect('/');
     });
 }
 
