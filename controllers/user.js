@@ -83,6 +83,10 @@ exports.loginPost = function(req, res){
     user.pwd = encrypt.md5Hex(pwd);
     var remember = req.body.remember;
 
+    req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
+    req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
+    var errors = req.validationErrors();
+
     var sql = 'select * from user where email=? and pwd=?';
     db.query(sql,[user.name, user.pwd], function(error, json) {
         if(error){
