@@ -36,6 +36,6 @@ Date.prototype.format = function(format) {
  * yyyy-MM-dd hh:mm:ss
  * @return {*}
  */
-exports.format = function(){
+exports.time = function(){
     return new Date().format("yyyy-MM-dd hh:mm:ss")
 }

@@ -2,6 +2,7 @@ var fs = require('fs')
    , util = require('util')
    , config = require('../config');
 
+// 跳转文件上传
 exports.get = function(req, res){
     res.render('file', { title: 'upload' });
 };
@@ -27,6 +28,17 @@ exports.post = function(req, res) {
     });
     res.set('Content-Type', 'text/html; charset=UTF-8');
     res.send('File uploaded to: ' + target_path + ' - ' + req.files.img.size + ' bytes' + img_name + '<img src='+ img_path + ' />');
+}
+
+
+// 校验传图
+exports.validator = function(req, res, next){
+    var file_name = req.files.imgFile.name;
+    if(!/(\S+)(.JPG|.jpg|.JPEG|.jpeg|.GIF|.gif|.BMP|.bmp|.PNG|.png)/.test(file_name)){
+        res.json({errors: 'mime error!'});
+        return;
+    }
+    return next();
 }
 
 // kindeditor 图片上传

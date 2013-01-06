@@ -17,23 +17,18 @@ module.exports = function(app){
     app.get('/', index.get);
 
     // 注册
-//    app.get('/signup', signup.get);
-//    app.post('/signup', signup.validator, signup.post);
+    app.get('/signup', signup.get);
+    app.post('/signup', signup.validator, signup.post);
+    app.get('/finish', signup.finish);
 
     // 登陆
-//    app.get('/login', login.get);
-//    app.post('/login', login.validator, login.post);
+    app.get('/login', login.get);
+    app.post('/login', login.validator, login.post);
+    // 登出
+    app.get('/logout', login.logout);
 
     // user
     app.get('/users', user.list);
-    // 注册
-    app.get('/signup', user.signupGet);
-    app.post('/signup', user.signupValidator, user.signupPost);
-    // 登陆
-    app.get('/login', user.loginGet);
-    app.post('/login', user.loginValidator, user.loginPost);
-    // 登出
-    app.get('/logout', user.logout);
 
     // blog 相关
     app.get("/blog", blog.get);
@@ -44,7 +39,7 @@ module.exports = function(app){
     // 上传相关
     app.get('/upload', file.get);
     app.post('/upload', file.post);
-//    app.post('/upload/editor', file.validator, file.editor);
+    app.post('/upload/editor', file.validator, file.editor);
 
     // 邮件相关
     app.get('/mail', mail.get);
@@ -61,7 +56,8 @@ module.exports = function(app){
     app.get('/socket', socket.index);
 
     // admin
-//    app.get('/admin', admin.get);
-//    app.all('/admin/*', admin.auth);
+    app.get('/admin', admin.get);
+    app.all('/admin/*', admin.auth);
+    app.post('/admin/session', admin.post);
 }
 

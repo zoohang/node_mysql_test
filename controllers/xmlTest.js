@@ -27,10 +27,11 @@ exports.test = function(req, res){
 }
 
 exports.jadetest = function(req, res){
-    var path = __dirname + '/../views/email/test.jade';
+    var path = __dirname + '/../views/email/signup_mail.jade';
     var str = fs.readFileSync(path, 'utf8');
     var fn = jade.compile(str, { filename: path, pretty: true });
-    var actual = fn({ user: 'Jade' });
+    var actual = fn({ user: 'Jade', baseUrl: 'http://snode.hp.af.cm/', verifyUrl: 'http://snode.hp.af.cm?code=123123123' });
     console.log(actual.trim());
-    res.render("signup_mail", {title: 'test'});
+    res.send(actual.trim());
+//    res.render("signup_mail", {title: 'test'});
 }

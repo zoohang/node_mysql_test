@@ -87,7 +87,7 @@ exports.save = function(Object, table, callback){
  * @param table
  * @param callback
  */
-exports.updateById = function(Object, table, callback){
+exports.updateById = function(Object, table, id, callback){
     // UPDATE `user` SET `pwd`='123456' WHERE (`id`='15')
     // UPDATE `user_info` SET `nick_name`='1', `real_name`='1' WHERE (`id`='9')
     var sql = 'UPDATE ' + table + ' SET ';
@@ -97,8 +97,8 @@ exports.updateById = function(Object, table, callback){
         keys.push(o + '=?');
         value.push(Object[o]);
     }
-    sql += keys.join(', ') + ' WHERE (id = ?)';
-    value.push(Object.id);
+    sql += keys.join(', ') + ' WHERE id = ?';
+    value.push(id);
 
     console.log(sql);
     pool.acquire(function(error, client) {
