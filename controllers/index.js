@@ -1,11 +1,15 @@
-/*
- * GET home page.
- */
 var encrypt = require("../util/encryptUtil")
   , db = require('../dao/db')
   , config = require('../config')
   , dateUtil = require('../util/dateUtil');
 
+/**
+ * 对用户的登陆状态进行维护
+ * @param req
+ * @param res
+ * @param next
+ * @return {*}
+ */
 exports.auth = function(req, res, next){
     if(req.session.user){
         res.locals.user = req.session.user;
@@ -42,7 +46,8 @@ exports.auth = function(req, res, next){
     return next();
 }
 
-exports.index = function(req, res){
+// index
+exports.get = function(req, res){
     var df = dateUtil.format();
     console.log("time:\t" + df);
     res.render('index', { title: 'snode', index: 'activd'});

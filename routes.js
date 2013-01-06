@@ -1,33 +1,37 @@
-/**
- * Created with JetBrains WebStorm.
- * User: 春梦
- * Date: 12-12-8
- * Time: 下午7:57
- * To change this template use File | Settings | File Templates.
- */
 var index = require('./controllers/index')
-  , user = require('./controllers/user')
-  , file = require('./controllers/file')
-  , mail = require('./controllers/mail')
-  , socket = require('./controllers/socket.io')
-  , blog = require('./controllers/blog')
-  , demo = require('./controllers/demo')
-  , xml = require('./controllers/xmlTest');
+    , signup = require('./controllers/signup')
+    , login = require('./controllers/login')
+    , user = require('./controllers/user')
+    , file = require('./controllers/file')
+    , mail = require('./controllers/mail')
+    , socket = require('./controllers/socket.io')
+    , blog = require('./controllers/blog')
+    , demo = require('./controllers/demo')
+    , xml = require('./controllers/xmlTest')
+    , admin = require('./controllers/admin');
 
 module.exports = function(app){
     // 配置session 页面中使用 user 获取
     app.all('*', index.auth);
     // home page
-    app.get('/', index.index);
+    app.get('/', index.get);
+
+    // 注册
+//    app.get('/signup', signup.get);
+//    app.post('/signup', signup.validator, signup.post);
+
+    // 登陆
+//    app.get('/login', login.get);
+//    app.post('/login', login.validator, login.post);
 
     // user
     app.get('/users', user.list);
     // 注册
     app.get('/signup', user.signupGet);
-    app.post('/signup', user.signupPost, user.signupSave);
+    app.post('/signup', user.signupValidator, user.signupPost);
     // 登陆
     app.get('/login', user.loginGet);
-    app.post('/login', user.loginPost);
+    app.post('/login', user.loginValidator, user.loginPost);
     // 登出
     app.get('/logout', user.logout);
 
@@ -40,7 +44,7 @@ module.exports = function(app){
     // 上传相关
     app.get('/upload', file.get);
     app.post('/upload', file.post);
-    app.post('/upload/editor', file.editor);
+//    app.post('/upload/editor', file.validator, file.editor);
 
     // 邮件相关
     app.get('/mail', mail.get);
@@ -51,8 +55,13 @@ module.exports = function(app){
 
     // test
     app.get("/test", xml.test);
+    app.get("/jadetest", xml.jadetest);
 
     // socket.io chat room
     app.get('/socket', socket.index);
+
+    // admin
+//    app.get('/admin', admin.get);
+//    app.all('/admin/*', admin.auth);
 }
 

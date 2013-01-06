@@ -6,7 +6,8 @@
  * To change this template use File | Settings | File Templates.
  */
 var xml2js = require('xml2js')
-  , fs = require('fs');
+    , jade = require('jade')
+    , fs = require('fs');
 
 exports.get = function(req, res){
     var parser = new xml2js.Parser();
@@ -22,5 +23,14 @@ exports.get = function(req, res){
 }
 
 exports.test = function(req, res){
+    res.render("signup_mail", {title: 'test'});
+}
+
+exports.jadetest = function(req, res){
+    var path = __dirname + '/../views/email/test.jade';
+    var str = fs.readFileSync(path, 'utf8');
+    var fn = jade.compile(str, { filename: path, pretty: true });
+    var actual = fn({ user: 'Jade' });
+    console.log(actual.trim());
     res.render("signup_mail", {title: 'test'});
 }

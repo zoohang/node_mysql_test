@@ -1,6 +1,3 @@
-/*
- * GET users listing.
- */
 var db = require('../dao/db')
    , config = require('../config')
    , util = require("../util/appUtil")
@@ -23,7 +20,7 @@ exports.signupGet = function(req, res){
 }
 
 // 注册检测
-exports.signupPost = function(req, res, next){
+exports.signupValidator = function(req, res, next){
     var user = req.body.user;
     req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
     req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
@@ -52,8 +49,9 @@ exports.signupPost = function(req, res, next){
         });
     }
 }
+
 // 保存注册用户 发送激活邮件
-exports.signupSave = function(req, res){
+exports.signupPost = function(req, res){
     var user = req.body.user;
     db.save(user, 'user', function(error, results){
         if(error){
@@ -75,8 +73,8 @@ exports.loginGet = function(req, res){
     res.render('login', { title: 'snode 登陆'});
 }
 
-// 登陆
-exports.loginPost = function(req, res){
+// 登陆校验
+exports.loginValidator = function(req, res, next){
     var user = req.body.user;
     req.assert(['user', 'email'], '邮箱格式错误！').isEmail();
     req.assert(['user', 'pwd'], '密码为6~20个字符！').len(6, 20);
@@ -84,18 +82,24 @@ exports.loginPost = function(req, res){
 
     console.log(errors);
     if(errors){
-        res.render('login', {title: 'snode 登陆',errors: errors});
+        res.json({errors: errors});
         return;
     }
-
     user.pwd = encrypt.md5Hex(user.pwd);
-    var remember = req.body.remember;
+    return next();
+}
+
+// 登陆
+exports.loginPost = function(req, res){
+    var user = req.body.user;
+
     var sql = 'select * from user where email=? and pwd=?';
     db.query(sql,[user.email, user.pwd], function(error, json) {
         if(error){
-            res.render('error', {title: 'error'});
+            console.log(error);
         }
         if(json.length > 0){
+            var remember = req.body.remember;
             if(remember != null){
                 var auth_token = encrypt.aesEncrypt(user.email, config.secret);
                 res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
@@ -103,9 +107,8 @@ exports.loginPost = function(req, res){
             req.session.user = json[0];
             res.locals.user = json[0];
             res.redirect('/');
-        }else{
-            res.render('error', { title: '用户名或密码错误！'});
         }
+        res.json({errors: '用户名或密码错误！'});
     });
 }
 

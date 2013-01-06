@@ -1,7 +1,11 @@
 @import "bootstrap.css";
 body {
     padding-top: 60px;
-    padding-bottom: 40px;
+}
+.inner{
+    width: 928px;
+    margin: 0 auto;
+    padding: 0;
 }
 .min-inner {
     width: 726px;

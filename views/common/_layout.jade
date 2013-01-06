@@ -27,11 +27,15 @@ html
     // container start
     .container
         block content
-        hr
-        include _footer
     // container end
+    hr
+    include _footer
     // javascript start
     script(src="/javascripts/jquery-1.8.3.min.js", charset="UTF-8")
     script(src="/javascripts/bootstrap.min.js", charset="UTF-8")
     script(src="/javascripts/bootstrap-ie.js", charset="UTF-8")
     block script
+    // 百度统计代码
+    script(type='text/javascript')
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff6bfc2dc33c1c4a64914ec53832fbf63' type='text/javascript'%3E%3C/script%3E"));

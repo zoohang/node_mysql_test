@@ -1,10 +1,3 @@
-/**
- * Created with JetBrains WebStorm.
- * User: 春梦
- * Date: 12-12-7
- * Time: 下午11:00
- * To change this template use File | Settings | File Templates.
- */
 var config = require("../config")
   , poolModule = require('generic-pool');
 
@@ -90,12 +83,11 @@ exports.save = function(Object, table, callback){
 
 /**
  * mysql update
- * @param Object      * old Object
- * @param Object      * new Object
+ * @param Object
  * @param table
  * @param callback
  */
-exports.updateById = function(Object, id, table, callback){
+exports.updateById = function(Object, table, callback){
     // UPDATE `user` SET `pwd`='123456' WHERE (`id`='15')
     // UPDATE `user_info` SET `nick_name`='1', `real_name`='1' WHERE (`id`='9')
     var sql = 'UPDATE ' + table + ' SET ';
@@ -106,7 +98,7 @@ exports.updateById = function(Object, id, table, callback){
         value.push(Object[o]);
     }
     sql += keys.join(', ') + ' WHERE (id = ?)';
-    value.push(id);
+    value.push(Object.id);
 
     console.log(sql);
     pool.acquire(function(error, client) {
