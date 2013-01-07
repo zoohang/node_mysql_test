@@ -25,7 +25,7 @@ var message = {
 // send the message and get a callback with an error or details of the message that was sent
 //server.send(message, function(err, message) { console.log(err || message); });
 exports.sendSignupMail = function (user, code){
-    var path = __dirname + '/../views/email/signup_mail.jade';
+    var path = __dirname + '/../views/email/signup_mail_send.jade';
     var str = fs.readFileSync(path, 'utf8');
     var fn = jade.compile(str, { filename: path, pretty: true });
     var baseUrl = config.domain;
@@ -35,7 +35,7 @@ exports.sendSignupMail = function (user, code){
     message.to = user.email;
     message.text = "欢迎加Snode社区";
     message.subject = "欢迎加Snode社区";
-    message.attachment[0].data = '<html>' + actual.trim() + '</html>';
+    message.attachment[0].data = actual.trim();
     server.send(message, function(err, message) {
         console.log(err || message);
     });

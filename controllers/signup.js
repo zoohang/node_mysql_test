@@ -26,7 +26,7 @@ exports.validator = function(req, res, next){
         user.pwd = encrypt.md5Hex(user.pwd);
         // 检查用户是否存在
         var sql = "SELECT 1 FROM user where email=? or nick_name=?";
-        db.query(sql,[user.email, user.nick_name], function(error, json) {
+        db.querySql(sql,[user.email, user.nick_name], function(error, json) {
             if(error) {
                 console.log(error);
             }
@@ -73,8 +73,9 @@ exports.finish = function(req, res){
     if(!code){
         res.render('error', {title: '邮箱验证失效请重现发送！'});
     }
-    var sql = 'select id,user_id,time from mail_verify where verify_code=?';
-    db.query(sql, [code],function(error, json) {
+    // user, 'user', ['id','email', 'nick_name'],
+    var mailVerify = {verify_code:code};
+    db.query(mailVerify, 'mail_verify', ['id', 'user_id', 'time'],function(error, json) {
         if(error){
             console.log(error);
         }else{

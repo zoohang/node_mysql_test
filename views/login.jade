@@ -53,10 +53,12 @@ block script
     // use ajax submit
     script(charset="UTF-8")
         $(function(){
+            /**
             $('form').ajaxForm({
                 dataType:  'json',
                 success: function(data){
                     alert(JSON.stringify(data));
                 }
             });
+            */
         });

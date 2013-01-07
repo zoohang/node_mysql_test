@@ -28,22 +28,22 @@ exports.validator = function(req, res, next){
 exports.post = function(req, res){
     var user = req.body.user;
 
-    var sql = 'select * from user where email=? and pwd=?';
-    db.query(sql,[user.email, user.pwd], function(error, json) {
+    db.query(user, 'user', ['id','email', 'nick_name'], function(error, json) {
         if(error){
             console.log(error);
+            res.json({errors: '用户名或密码错误！'});
         }
         if(json.length > 0){
+            var user = json[0];
             var remember = req.body.remember;
             if(remember != null){
-                var auth_token = encrypt.aesEncrypt(user.email, config.secret);
+                var auth_token = encrypt.aesEncrypt(user.email + ',' + user.nick_name, config.secret);
                 res.cookie('snode_user', auth_token, {path: '/', maxAge: config.maxAge}); //cookie 有效期30天
             }
-            req.session.user = json[0];
-            res.locals.user = json[0];
+            req.session.user = user;
+            res.locals.user = user;
             res.redirect('/');
         }
-        res.json({errors: '用户名或密码错误！'});
     });
 }
 

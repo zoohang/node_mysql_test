@@ -23,11 +23,13 @@ exports.get = function(req, res){
 }
 
 exports.test = function(req, res){
+    console.log('?? \t test');
+
     res.render("signup_mail", {title: 'test'});
 }
 
 exports.jadetest = function(req, res){
-    var path = __dirname + '/../views/email/signup_mail.jade';
+    var path = __dirname + '/../views/email/signup_mail_send.jade';
     var str = fs.readFileSync(path, 'utf8');
     var fn = jade.compile(str, { filename: path, pretty: true });
     var actual = fn({ user: 'Jade', baseUrl: 'http://snode.hp.af.cm/', verifyUrl: 'http://snode.hp.af.cm?code=123123123' });

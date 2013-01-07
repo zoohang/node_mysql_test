@@ -17,22 +17,22 @@ exports.auth = function(req, res, next){
     }else{
         var cookie = req.cookies.snode_user;
         if (cookie){
-            var userName = encrypt.aesDecrypt(cookie, config.secret);
-            console.log(userName);
-            var sql = "SELECT id,sex FROM user where email=?";
-            db.query(sql,[userName], function(error, json) {
+            var auth_token = encrypt.aesDecrypt(cookie, config.secret);
+            console.log(auth_token);
+            var tokens = auth_token.split(',');
+            var user = {
+                email: tokens[0],
+                nick_name: tokens[1]
+            };
+            //Object, table, param
+            db.query(user, 'user', ['id','email', 'nick_name'], function(error, json) {
                 if(error) {
                     console.log(error);
                 }
                 console.log(JSON.stringify(json));
                 if(json.length > 0){
-                    var user = new Object();
-                    user.id = json[0].id;
-                    user.name = userName;
-                    user.pwd = null;
-                    user.sex = json[0].sex;
-                    req.session.user = user;
-                    res.locals.user = user;
+                    req.session.user = json[0];
+                    res.locals.user = json[0];
                     console.log("has cookie!");
                     /**
                      * 说明，由于nodejs的异步 在mysql查询之前会先返回页面

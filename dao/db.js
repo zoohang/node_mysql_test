@@ -1,5 +1,5 @@
 var config = require("../config")
-  , poolModule = require('generic-pool');
+    , poolModule = require('generic-pool');
 
 /**
  * mysql pool
@@ -30,7 +30,7 @@ var pool = poolModule.Pool({
  * @param param
  * @param callback
  */
-exports.query = function(sql, param, callback) {
+exports.querySql = function(sql, param, callback) {
     console.log(sql);
     pool.acquire(function(error, client) {
         if (error) {
@@ -53,21 +53,28 @@ exports.query = function(sql, param, callback) {
  * @param param
  * @param callback
  */
-exports.q = function(Object, table, param, callback) {
+exports.query = function(Object, table, param, callback) {
     // SELECT * FROM `user` WHERE id='1';
-    var sql = "SELECT " + param.join(', ') + ' FROM ' + table + ' WHERE ';
+    var sql = "SELECT " + param.join(', ') + ' FROM ' + table;
     var keys = [];
     var values = [];
-    for(o in Object){
+    // var user = {};
+    var temp = false;
+    for(var o in Object){
         keys.push(o + '=?');
         values.push(Object[o]);
+        temp = true;
     }
-    if(Object.id){
-        sql += 'id =?';
-        values = [Object.id];
-    }else{
-        sql += keys.join(' AND ');
+    if(temp){
+        sql += ' WHERE ';
+        if(Object.id){
+            sql += 'id =?';
+            values = [Object.id];
+        }else{
+            sql += keys.join(' AND ');
+        }
     }
+
     console.log(sql);
     pool.acquire(function(error, client) {
         if (error) {
@@ -95,7 +102,7 @@ exports.save = function(Object, table, callback){
     var keys = [];
     var order = [];
     var values = [];
-    for(o in Object){
+    for(var o in Object){
         keys.push(o);
         order.push('?');
         values.push(Object[o]);
@@ -130,12 +137,12 @@ exports.updateById = function(Object, table, id, callback){
     var sql = 'UPDATE ' + table + ' SET ';
     var keys = [];
     var values = [];
-    for(o in Object){
+    for(var o in Object){
         keys.push(o + '=?');
         values.push(Object[o]);
     }
     sql += keys.join(', ') + ' WHERE id = ?';
-    value.push(id);
+    values.push(id);
 
     console.log(sql);
     pool.acquire(function(error, client) {
@@ -165,7 +172,7 @@ exports.delete = function(Object, table, callback){
 
     var keys = [];
     var values = [];
-    for(o in Object){
+    for(var o in Object){
         keys.push(o + '=?');
         values.push(Object[o]);
     }
