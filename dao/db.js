@@ -48,6 +48,43 @@ exports.query = function(sql, param, callback) {
 }
 
 /**
+ * mysql query
+ * @param sql
+ * @param param
+ * @param callback
+ */
+exports.q = function(Object, table, param, callback) {
+    // SELECT * FROM `user` WHERE id='1';
+    var sql = "SELECT " + param.join(', ') + ' FROM ' + table + ' WHERE ';
+    var keys = [];
+    var values = [];
+    for(o in Object){
+        keys.push(o + '=?');
+        values.push(Object[o]);
+    }
+    if(Object.id){
+        sql += 'id =?';
+        values = [Object.id];
+    }else{
+        sql += keys.join(' AND ');
+    }
+    console.log(sql);
+    pool.acquire(function(error, client) {
+        if (error) {
+            // handle error - this is generally the err from your
+            // factory.create function
+            callback(error, null);
+        }else {
+            client.query(sql, values, function(error, rows) {
+                callback(error, rows);
+                // return object back to pool
+                pool.release(client);
+            });
+        }
+    });
+}
+
+/**
  * mysql insert
  * @param Object
  * @param table
@@ -57,11 +94,11 @@ exports.save = function(Object, table, callback){
     var sql = 'INSERT INTO ' + table + ' (';
     var keys = [];
     var order = [];
-    var value = [];
+    var values = [];
     for(o in Object){
         keys.push(o);
         order.push('?');
-        value.push(Object[o]);
+        values.push(Object[o]);
     }
     sql = sql + keys.join(', ') + ') VALUES (' + order.join(', ') + ')';
 
@@ -72,7 +109,7 @@ exports.save = function(Object, table, callback){
             // factory.create function
             callback(error, null);
         }else {
-            client.query(sql, value, function(error, rows) {
+            client.query(sql, values, function(error, rows) {
                 callback(error, rows);
                 // return object back to pool
                 pool.release(client);
@@ -92,10 +129,10 @@ exports.updateById = function(Object, table, id, callback){
     // UPDATE `user_info` SET `nick_name`='1', `real_name`='1' WHERE (`id`='9')
     var sql = 'UPDATE ' + table + ' SET ';
     var keys = [];
-    var value = [];
+    var values = [];
     for(o in Object){
         keys.push(o + '=?');
-        value.push(Object[o]);
+        values.push(Object[o]);
     }
     sql += keys.join(', ') + ' WHERE id = ?';
     value.push(id);
@@ -107,7 +144,7 @@ exports.updateById = function(Object, table, id, callback){
             // factory.create function
             callback(error, null);
         }else {
-            client.query(sql, value, function(error, rows) {
+            client.query(sql, values, function(error, rows) {
                 callback(error, rows);
                 // return object back to pool
                 pool.release(client);
@@ -127,10 +164,10 @@ exports.delete = function(Object, table, callback){
     var sql = 'DELETE FROM ' + table + ' WHERE (';
 
     var keys = [];
-    var value = [];
+    var values = [];
     for(o in Object){
         keys.push(o + '=?');
-        value.push(Object[o]);
+        values.push(Object[o]);
     }
     sql += keys.join(" and ") + ")";
 
@@ -141,7 +178,7 @@ exports.delete = function(Object, table, callback){
             // factory.create function
             callback(error, null);
         }else {
-            client.query(sql, value, function(error, rows) {
+            client.query(sql, values, function(error, rows) {
                 callback(error, rows);
                 // return object back to pool
                 pool.release(client);
