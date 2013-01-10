@@ -14,6 +14,7 @@ exports.auth = function(req, res, next){
     if(req.session.user){
         res.locals.user = req.session.user;
         console.log("has session!");
+        return next();
     }else{
         var cookie = req.cookies.snode_user;
         if (cookie){
@@ -41,9 +42,9 @@ exports.auth = function(req, res, next){
                 }
                 return next();
             });
+
         }
     }
-    return next();
 }
 
 // index

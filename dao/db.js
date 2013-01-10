@@ -98,17 +98,7 @@ exports.query = function(Object, table, param, callback) {
  * @param callback
  */
 exports.save = function(Object, table, callback){
-    var sql = 'INSERT INTO ' + table + ' (';
-    var keys = [];
-    var order = [];
-    var values = [];
-    for(var o in Object){
-        keys.push(o);
-        order.push('?');
-        values.push(Object[o]);
-    }
-    sql = sql + keys.join(', ') + ') VALUES (' + order.join(', ') + ')';
-
+    var sql = 'INSERT INTO ' + table + ' SET ?';
     console.log(sql);
     pool.acquire(function(error, client) {
         if (error) {
@@ -116,7 +106,7 @@ exports.save = function(Object, table, callback){
             // factory.create function
             callback(error, null);
         }else {
-            client.query(sql, values, function(error, rows) {
+            client.query(sql, Object, function(error, rows) {
                 callback(error, rows);
                 // return object back to pool
                 pool.release(client);
@@ -176,7 +166,7 @@ exports.delete = function(Object, table, callback){
         keys.push(o + '=?');
         values.push(Object[o]);
     }
-    sql += keys.join(" and ") + ")";
+    sql += keys.join(" AND ") + ")";
 
     console.log(sql);
     pool.acquire(function(error, client) {

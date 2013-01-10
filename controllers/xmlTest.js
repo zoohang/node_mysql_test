@@ -7,7 +7,8 @@
  */
 var xml2js = require('xml2js')
     , jade = require('jade')
-    , fs = require('fs');
+    , fs = require('fs')
+    , dao = require("../dao/db.js");
 
 exports.get = function(req, res){
     var parser = new xml2js.Parser();
@@ -23,8 +24,7 @@ exports.get = function(req, res){
 }
 
 exports.test = function(req, res){
-    console.log('?? \t test');
-
+    dao.tableName = 'user';
     res.render("signup_mail", {title: 'test'});
 }
 
