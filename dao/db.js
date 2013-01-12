@@ -74,8 +74,8 @@ exports.query = function(Object, table, param, callback) {
             sql += keys.join(' AND ');
         }
     }
-
     console.log(sql);
+	console.log(values);
     pool.acquire(function(error, client) {
         if (error) {
             // handle error - this is generally the err from your

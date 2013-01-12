@@ -27,7 +27,6 @@ exports.validator = function(req, res, next){
 // 登陆
 exports.post = function(req, res){
     var user = req.body.user;
-
     db.query(user, 'user', ['id','email', 'nick_name'], function(error, json) {
         if(error){
             console.log(error);
@@ -43,6 +42,7 @@ exports.post = function(req, res){
             req.session.user = user;
             res.locals.user = user;
             res.redirect('/');
+            return;
         }
     });
 }
@@ -52,5 +52,6 @@ exports.logout = function(req, res){
     req.session.destroy();
     res.clearCookie('snode_user', { path: '/' });
     res.redirect('/');
+    return;
 }
 

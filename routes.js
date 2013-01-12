@@ -11,6 +11,16 @@ var index = require('./controllers/index')
     , admin = require('./controllers/admin');
 
 module.exports = function(app){
+    // .*\.(gif|jpg|jpeg|png|bmp|swf|js|css)$
+    /**
+     app.get(/.*\.(gif|jpg|jpeg|png|bmp|js|css)$/, function(req, res, next){
+        console.log(req.originalUrl);
+        console.log("hello");
+//        return;
+         res.send(200);
+    });
+     */
+
     // 配置session 页面中使用 user 获取
     app.all('*', index.auth);
     // home page
@@ -57,7 +67,14 @@ module.exports = function(app){
 
     // admin
     app.get('/admin', admin.get);
-    app.all('/admin/*', admin.auth);
     app.post('/admin/session', admin.post);
+    app.get('/admin/logout', admin.logout);
+    app.all('/admin/*', admin.auth);
+
+    /**
+    app.get('*', function(req, res){
+        res.send(404, {'error': 'page not found!'});
+    });
+     */
 }
 

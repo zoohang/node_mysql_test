@@ -1,0 +1,15 @@
+// Navbar start
+.navbar.navbar-inverse.navbar-fixed-top
+    .navbar-inner
+        .container
+            span.brand(href="./") Snode
+            .nav-collapse.collapse.pull-right
+                .btn-group.pull-right
+                    a.btn.dropdown-toggle(data-toggle="dropdown", href="#")
+                        i.icon-user
+                        span.hidden-phone #{locals.admin.email}
+                        span.caret
+                    ul.dropdown-menu
+                        li
+                            a(href="/admin/logout") Logout
+// Navbar end

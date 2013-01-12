@@ -1,0 +1,13 @@
+extends ../common/_layout-admin
+block meta
+    link(rel="stylesheet", type="text/css", href="/stylesheets/admin.css")
+block content
+    form.form-signin(action="/admin/session", method="post")
+        h2.form-signin-heading 请先登录：
+        input.input-block-level(type="email", name="admin[email]", placeholder="Email address", required="required")
+        input.input-block-level(type="password", name="admin[password]", placeholder="Password", required="required")
+        label.checkbox
+            input(type="checkbox", name="remember", value="1", checked="checked")
+            |记住密码
+        .div-signin
+            button.btn.btn-primary.pull-right(type="submit") 登录

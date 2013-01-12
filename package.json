@@ -1,18 +1,19 @@
 {
-  "name": "snode",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app"
-  },
-  "dependencies": {
-    "express": "3.0.3",
-    "express-validator": "*",
-    "jade": "*",
-    "mysql": "2.x",
-    "generic-pool": "*",
-    "xml2js": "*",
-    "emailjs": "*",
-    "socket.io": "*"
-  }
+    "name":"snode",
+    "version":"0.0.1",
+    "private":true,
+    "scripts":{
+        "start":"node app"
+    },
+    "dependencies":{
+        "express":"3.0.3",
+        "express-validator":"*",
+        "jade":"*",
+        "mysql":"2.x",
+        "generic-pool":"*",
+        "xml2js":"*",
+        "emailjs":"*",
+        "socket.io":"*",
+        "log4js":"*"
+    }
 }

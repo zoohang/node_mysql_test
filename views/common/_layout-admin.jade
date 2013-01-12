@@ -1,0 +1,40 @@
+doctype 5
+html
+  head
+    title= title
+    meta(http-equiv='content-type', content='text/html; charset=UTF-8')
+    meta(name='Keywords', content='nodejs,node mysql,node demo')
+    meta(name='Description', content='snode snode.hp.af.cm 是一个nodejs开发的demo网站。')
+    // Le styles
+    link(rel="stylesheet", type="text/css", href="/stylesheets/app.css")
+    // if lte IE 6
+        link(rel="stylesheet", type="text/css", href="/stylesheets/bootstrap-ie6.min.css")
+    // if lte IE 7
+        link(rel="stylesheet", type="text/css", href="/stylesheets/ie.css")
+    // HTML5 shim, for IE6-8 support of HTML5 elements
+    // if lt IE 9
+        script(src="http://html5shim.googlecode.com/svn/trunk/html5.js")
+    // Fav and touch icons
+    link(rel="apple-touch-icon-precomposed", sizes="144x144", href="/icon/apple-touch-icon-144-precomposed.png")
+    link(rel="apple-touch-icon-precomposed", sizes="114x114", href="/icon/apple-touch-icon-114-precomposed.png")
+    link(rel="apple-touch-icon-precomposed", sizes="72x72", href="/icon/apple-touch-icon-72-precomposed.png")
+    link(rel="apple-touch-icon-precomposed", href="/icon/apple-touch-icon-57-precomposed.png")
+    link(rel="shortcut icon", href="/favicon.ico")
+    // Fav and touch icons
+    block meta
+  body
+    block navbar
+    // container start
+    .container.container-fluid
+        block content
+    // container end
+    // javascript start
+    script(src="/javascripts/jquery-1.8.3.min.js", charset="UTF-8")
+    script(src="/javascripts/bootstrap.min.js", charset="UTF-8")
+    // if IE
+        script(src="/javascripts/bootstrap-ie.js", charset="UTF-8")
+    block script
+    // 百度统计代码
+    script(type='text/javascript')
+        var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Ff6bfc2dc33c1c4a64914ec53832fbf63' type='text/javascript'%3E%3C/script%3E"));
