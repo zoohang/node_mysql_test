@@ -1,3 +1,65 @@
-extends ../common/_layout-admin
+extends ../common/_admin-layout
+block meta
+    style
+
 block navbar
-    include ../common/_navbar-admin
+    include ../common/_admin-navbar
+block content
+    .row-fluid
+        .span2
+            include ../common/_admin-sidebar-nav
+        .span10
+            table.table.table-bordered
+                thead
+                    tr
+                        th #
+                        th First Name
+                        th Last Name
+                        th Username
+                        th 操作
+                tbody
+                    tr
+                        td 1
+                        td Mark
+                        td Otto
+                        td @mdo
+                        td.row
+                            a.btn.btn-success.span3(href="#")
+                                i.icon-zoom-in.icon-white
+                                |查看
+                            a.btn.btn-info.span3(href="#")
+                                i.icon-edit.icon-white
+                                |编辑
+                            a.btn.btn-danger.span3(href="#")
+                                i.icon-trash.icon-white
+                                |删除
+                    tr
+                        td 2
+                        td Jacob
+                        td Thornton
+                        td @fat
+                        td.row
+                            a.btn.btn-success.span3(href="#")
+                                i.icon-zoom-in.icon-white
+                                |查看
+                            a.btn.btn-info.span3(href="#")
+                                i.icon-edit.icon-white
+                                |编辑
+                            a.btn.btn-danger.span3(href="#")
+                                i.icon-trash.icon-white
+                                |删除
+                    tr
+                        td 3
+                        td Larry
+                        td the Bird
+                        td @twitter
+                        td.row
+                            a.btn.btn-success.span3(href="#")
+                                i.icon-zoom-in.icon-white
+                                |查看
+                            a.btn.btn-info.span3(href="#")
+                                i.icon-edit.icon-white
+                                |编辑
+                            a.btn.btn-danger.span3(href="#")
+                                i.icon-trash.icon-white
+                                |删除
