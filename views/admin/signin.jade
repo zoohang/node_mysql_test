@@ -5,7 +5,7 @@ block content
     form.form-signin(action="/admin/session", method="post")
         h2.form-signin-heading 请先登录：
         input.input-block-level(type="email", name="admin[email]", placeholder="Email address", required="required")
-        input.input-block-level(type="password", name="admin[password]", placeholder="Password", required="required")
+        input.input-block-level(type="password", name="admin[password]", placeholder="Password", pattern="[A-Za-z0-9_]{6,16}", required="required")
         label.checkbox
             input(type="checkbox", name="remember", value="1", checked="checked")
             |记住密码

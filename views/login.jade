@@ -1,16 +1,5 @@
 extends common/_layout
 block meta
-    style(type="text/css")
-        .text-error {
-            position: absolute;
-            bottom: -16px;
-            left: 0;
-            padding: 2px;
-            background: #f2dede;
-            font-size: 12px;
-            color: #a42625;
-            line-height: 1;
-        }
 
 block navbar
     navLogin = 'active'
@@ -39,7 +28,7 @@ block content
                     input.text-34(type="email", name="user[email]", required)
                 p
                     label(for="password") 登录密码
-                    input.text-34(type="password", name="user[pwd]", required)
+                    input.text-34(type="password", name="user[pwd]", pattern="[A-Za-z0-9_]{6,16}", required)
                 input.btn.btn-primary(type="submit", value="登录")
                 div
                     input(type="checkbox", name="remember", value="1", checked)

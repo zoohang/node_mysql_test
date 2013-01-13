@@ -1,13 +1,13 @@
 var dao = require('../dao/db');
 
-module.exports = user;
+module.exports = userDao;
 
 // test
-user = function(){
+userDao = function(){
     this.table = 'user_info'
 }
 // test
-user.prototype.install = function(){
+userDao.prototype.install = function(){
     // Object, table, callback
     dao.save(user, user.table, function(error, data){
 

@@ -1,1 +1,36 @@
+extends ../common/_admin-layout
+block meta
+    link(rel="stylesheet", type="text/css", href="/stylesheets/admin.css")
+    include ../common/_kindeditor
+block navbar
+    include ../common/_admin-navbar
+block content
+    .row-fluid
+        .span2
+            include ../common/_admin-sidebar-nav
+        .span10
+            .row-fluid
+                .box.span12
+                    .box-header.well
+                        h2
+                            i.icon-edit
+                            |Blog
+                    .box-content
+                        form
+                            fieldset
+                                legend 撰写博文
+                                .control-group
+                                    label.control-label 标题
+                                    .controls
+                                        input.input-block-level(type="text")
 
+                                .control-group
+                                    label 内容
+                                    div.controls
+                                        textarea#editor(name="answer.content")
+                                .form-actions
+                                    button.btn.btn-primary.pull-right(type="submit") 发表
+                                    button.btn.pull-right(type="reset") 取消
+
+block footer
+    include ../common/_footer
