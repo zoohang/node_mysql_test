@@ -1,6 +1,7 @@
 # node-mysql-test
 采用的express node mvc框架
 
+
 基于appfog云空间，详情请访问appfog官网：
 ```
 https://console.appfog.com/
@@ -8,6 +9,11 @@ https://console.appfog.com/
 演示地址
 ```
 http://snode.hp.af.cm/
+```
+## 提示
+推荐使用CoffeeScript版，该版本会持续更新
+```
+https://github.com/ChunMengLu/coffee-snode.git
 ```
 
 # Install
@@ -61,7 +67,3 @@ node app.js
 请删除掉views/common/_layout.jade中的百度统计代码！
 
 如果有不明白或问题可联系email：596392912@qq.com Thanks！
-
-```
-由于开发缓慢，网站页面部分将使用java去实现，node专注做html app部分！
-```
