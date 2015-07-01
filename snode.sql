@@ -119,6 +119,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nick_name` varchar(50) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
   `name` varchar(50) DEFAULT NULL,
   `pwd` varchar(64) DEFAULT NULL,
   `sex` int(1) DEFAULT NULL,
